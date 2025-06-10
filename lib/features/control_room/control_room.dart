@@ -51,7 +51,7 @@ class _ControlRoomState extends State<ControlRoom> {
         backgroundColor: Colors.transparent,
         centerTitle: true,
         title: Padding(
-          padding: const EdgeInsets.only(bottom: 10.0),
+          padding: const EdgeInsets.only(bottom: 11.0),
           child: Text(
             'Control Room',
             style: Theme.of(context).textTheme.headlineLarge!.copyWith(
