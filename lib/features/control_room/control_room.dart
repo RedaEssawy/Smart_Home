@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mqtt_client/mqtt_client.dart';
-import 'package:smart_home/core/pages/nav_bottom_page.dart';
 import 'package:smart_home/core/util/assets.dart';
 import 'package:smart_home/core/util/topics.dart';
 import 'package:smart_home/core/widgets/devices_card.dart';
@@ -47,38 +46,33 @@ class _ControlRoomState extends State<ControlRoom> {
     return Scaffold(
       //to make the appBar take the same features of the body
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        centerTitle: true,
-        title: Padding(
-          padding: const EdgeInsets.only(bottom: 11.0),
-          child: Text(
-            'Control Room',
-            style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                  color: Theme.of(context).primaryColor,
-                ),
-          ),
-        ),
-        leading: BackButton(onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    NavBottomPage()), // Replace with your page
-          );
-        }),
-      ),
+
+      // appBar: AppBar(
+      //   backgroundColor: Colors.transparent,
+      //   centerTitle: true,
+      //   // title: Padding(
+      //   //   padding: const EdgeInsets.only(bottom: 11.0),
+      //   //   child: Text(
+      //   //     'Control Room',
+      //   //     style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+      //   //           color: Theme.of(context).primaryColor,
+      //   //         ),
+      //   //   ),
+      //   // ),
+      //   // leading: BackButton(onPressed: () {
+      //   //   Navigator.push(
+      //   //     context,
+      //   //     MaterialPageRoute(
+      //   //         builder: (context) =>
+      //   //             NavBottomPage()), // Replace with your page
+      //   //   );
+      //   // }),
+      // ),
 
       body: Container(
         padding: EdgeInsets.all(20),
         width: size.width,
-        height: size.height * .7,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-              // colorFilter: ColorFilter.linearToSrgbGamma(),
-              image: AssetImage(Assets.tankRoomImage),
-              fit: BoxFit.fill),
-        ),
+        height: size.height * .9,
         child: BlocBuilder<ControlroomCubit, ControlroomState>(
           builder: (BuildContext context, state) {
             final isLandscap =
@@ -87,16 +81,21 @@ class _ControlRoomState extends State<ControlRoom> {
                 builder: (context, constraints) => Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
+                        ClipRRect(
+                          //ClipRRect: to make the image rounded corners to make it look like a circle
+                          borderRadius: BorderRadius.circular(size.width * 0.1),
+                          child: Image.asset(
+                            'assets/images/control.jpeg',
+                            fit: BoxFit.fitWidth,
+                            height: size.height * 0.15,
+                            width: size.width * 0.9,
+                          ),
+                        ),
+                        SizedBox(height: size.height * 0.05),
                         Container(
                           width: constraints.maxWidth,
-                          height: constraints.maxHeight * 0.8,
-                          decoration: BoxDecoration(
-                              color: const Color.fromARGB(123, 233, 239, 241),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(
-                                      constraints.maxWidth * 0.06),
-                                  topRight: Radius.circular(
-                                      constraints.maxWidth * 0.06))),
+                          height: constraints.maxHeight,
+                          padding: EdgeInsets.all(constraints.maxWidth * 0.001),
                           child: GridView.count(
                               mainAxisSpacing: constraints.maxHeight * 0.01,
                               padding:

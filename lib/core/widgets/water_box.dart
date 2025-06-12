@@ -25,9 +25,7 @@ class WaterBox extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    destinationPage), // Replace with your page
+            MaterialPageRoute(builder: (context) => destinationPage),
           );
         },
         child: Container(
@@ -35,27 +33,20 @@ class WaterBox extends StatelessWidget {
               borderRadius: BorderRadius.circular(30),
               image: DecorationImage(
                   image: AssetImage(pageImage), fit: BoxFit.fill)),
-          child: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Colors.transparent, Colors.black],
-                    stops: [.7, .9999999],
-                    transform: GradientRotation((22 / 7) / 2))),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  pageName,
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                Text(
-                  '$deviceName = $activeDevice',
-                  style: TextStyle(color: Colors.white),
-                )
-              ],
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                pageName,
+                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                      color: Theme.of(context).primaryColor,
+                    ),
+              ),
+              Text('$deviceName = $activeDevice',
+                  style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                        color: Theme.of(context).primaryColor,
+                      ))
+            ],
           ),
         ),
       ),

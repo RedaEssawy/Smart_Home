@@ -35,55 +35,19 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final isLandscap =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.black87,
+        backgroundColor: const Color.fromRGBO(218, 237, 209, 0.867),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10.0),
-                        child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              image: DecorationImage(
-                                  image: AssetImage(Assets.userImage))),
-                        ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'welcome',
-                            style: TextStyle(
-                              color: Color.fromARGB(170, 234, 225, 225),
-                            ),
-                          ),
-                          const Text(
-                            'Reda Essawy',
-                            style: TextStyle(color: Colors.white),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                  Image.asset(
-                    Assets.menuImage,
-                    width: 40,
-                    height: 40,
-                  ),
-                ],
-              ),
               Padding(
                 padding: const EdgeInsets.only(top: 40, bottom: 10),
                 child: Row(
@@ -103,8 +67,9 @@ class _HomeState extends State<Home> {
               ),
               Expanded(
                 child: GridView.count(
-                  crossAxisSpacing: 20,
-                  crossAxisCount: 2,
+                  crossAxisSpacing: size.width * 0.03,
+                  mainAxisSpacing: size.width * 0.03,
+                  crossAxisCount: isLandscap ? 4 : 2,
                   children: [
                     WaterBox(
                       pageImage: Assets.tankImage,

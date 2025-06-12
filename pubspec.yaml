@@ -84,6 +84,7 @@ flutter:
     - assets/images/Flowrate_value.png
     - assets/images/Tank_level.png
     - assets/images/Flowrate_valve.jpg
+    - assets/images/control.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
