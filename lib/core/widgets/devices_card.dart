@@ -39,7 +39,7 @@ class DevicesCard extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.all(constraints.maxWidth * 0.02),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
                           deviceName,
