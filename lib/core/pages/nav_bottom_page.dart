@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smart_home/core/pages/drawer_page.dart';
 import 'package:smart_home/features/control_room/control_room.dart';
 import 'package:smart_home/features/home/home.dart';
+import 'package:smart_home/features/tank_room/tank_room.dart';
 
 class NavBottomPage extends StatefulWidget {
   const NavBottomPage({super.key});
@@ -23,13 +23,31 @@ class _NavBottomPageState extends State<NavBottomPage> {
     Center(child: Text('Consumption')),
     Center(child: Text('Alerts')),
     ControlRoom(),
-    Center(child: Text('Settings'))
+    Center(child: Text('Settings')),
+    TankRoom()
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      drawer: DrawerPage(),
+      appBar: AppBar(
+        title: Center(
+          child: Text(
+            'Water Tracking',
+            style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                  color: Theme.of(context).primaryColor,
+                ),
+          ),
+        ),
+        leading: BackButton(onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    NavBottomPage()), // Replace with your page
+          );
+        }),
+      ),
+      // drawer: DrawerPage(),
       body: bodyOptions[_index],
       bottomNavigationBar: BottomNavigationBar(
           // items is a list of BottomNavigationBarItem objects where each item represents a tab
@@ -55,7 +73,12 @@ class _NavBottomPageState extends State<NavBottomPage> {
               icon: Icon(Icons.settings),
               label: 'Settings',
             ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.propane_tank),
+              label: 'Tank Status',
+            ),
           ],
+          showUnselectedLabels: true,
           currentIndex: _index,
           onTap: _onItemTapped),
     );
