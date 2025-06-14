@@ -78,75 +78,78 @@ class _ControlRoomState extends State<ControlRoom> {
             final isLandscap =
                 MediaQuery.of(context).orientation == Orientation.landscape;
             return LayoutBuilder(
-                builder: (context, constraints) => Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        ClipRRect(
-                          //ClipRRect: to make the image rounded corners to make it look like a circle
-                          borderRadius: BorderRadius.circular(size.width * 0.1),
-                          child: Image.asset(
-                            'assets/images/control.jpeg',
-                            fit: BoxFit.fitWidth,
-                            height: size.height * 0.15,
-                            width: size.width * 0.9,
+                builder: (context, constraints) => SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          ClipRRect(
+                            //ClipRRect: to make the image rounded corners to make it look like a circle
+                            borderRadius:
+                                BorderRadius.circular(size.width * 0.1),
+                            child: Image.asset(
+                              'assets/images/control.jpeg',
+                              fit: BoxFit.fitWidth,
+                              height: size.height * 0.15,
+                              width: size.width * 0.9,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: size.height * 0.05),
-                        Container(
-                          width: constraints.maxWidth,
-                          height: constraints.maxHeight,
-                          padding: EdgeInsets.all(constraints.maxWidth * 0.001),
-                          child: GridView.count(
-                              mainAxisSpacing: constraints.maxHeight * 0.01,
-                              padding:
-                                  EdgeInsets.all(constraints.maxWidth * 0.01),
-                              crossAxisCount: isLandscap ? 4 : 2,
-                              children: [
-                                DevicesCard(
-                                  deviceName: 'Main Valve',
-                                  deviceImage: Assets.tankValveImage,
-                                  deviceState:
-                                      ControlroomCubit.get(context).mainValve,
-                                  onChange: (value) {
-                                    ControlroomCubit.get(context).publish(
-                                        Topics.mainValveTankroomTopic,
-                                        value.toString());
-                                  },
-                                ),
-                                DevicesCard(
+                          Container(
+                            width: constraints.maxWidth,
+                            height: constraints.maxHeight,
+                            padding:
+                                EdgeInsets.all(constraints.maxWidth * 0.001),
+                            child: GridView.count(
+                                mainAxisSpacing: constraints.maxHeight * 0.01,
+                                padding:
+                                    EdgeInsets.all(constraints.maxWidth * 0.01),
+                                crossAxisCount: isLandscap ? 4 : 2,
+                                children: [
+                                  DevicesCard(
+                                    deviceName: 'Main Valve',
+                                    deviceImage: Assets.tankValveImage,
                                     deviceState:
-                                        ControlroomCubit.get(context).tankValve,
+                                        ControlroomCubit.get(context).mainValve,
                                     onChange: (value) {
                                       ControlroomCubit.get(context).publish(
-                                          Topics.tankValveTankroomTopic,
+                                          Topics.mainValveTankroomTopic,
                                           value.toString());
                                     },
-                                    deviceName: 'Tank Valve',
-                                    deviceImage: Assets.tankValveImage),
-                                DevicesCard(
+                                  ),
+                                  DevicesCard(
+                                      deviceState: ControlroomCubit.get(context)
+                                          .tankValve,
+                                      onChange: (value) {
+                                        ControlroomCubit.get(context).publish(
+                                            Topics.tankValveTankroomTopic,
+                                            value.toString());
+                                      },
+                                      deviceName: 'Tank Valve',
+                                      deviceImage: Assets.tankValveImage),
+                                  DevicesCard(
+                                      deviceState:
+                                          ControlroomCubit.get(context).cado,
+                                      onChange: (value) {
+                                        ControlroomCubit.get(context).publish(
+                                            Topics.cadoValveTopic,
+                                            value.toString());
+                                      },
+                                      deviceName: 'Cado Valve',
+                                      deviceImage: Assets.tankValveImage),
+                                  DevicesCard(
+                                    deviceName: 'Motor',
+                                    deviceImage: Assets.motorImage,
                                     deviceState:
-                                        ControlroomCubit.get(context).cado,
+                                        ControlroomCubit.get(context).motor,
                                     onChange: (value) {
                                       ControlroomCubit.get(context).publish(
-                                          Topics.cadoValveTopic,
+                                          Topics.motorTankroomTopic,
                                           value.toString());
                                     },
-                                    deviceName: 'Cado Valve',
-                                    deviceImage: Assets.tankValveImage),
-                                DevicesCard(
-                                  deviceName: 'Motor',
-                                  deviceImage: Assets.motorImage,
-                                  deviceState:
-                                      ControlroomCubit.get(context).motor,
-                                  onChange: (value) {
-                                    ControlroomCubit.get(context).publish(
-                                        Topics.motorTankroomTopic,
-                                        value.toString());
-                                  },
-                                ),
-                              ]),
-                        )
-                      ],
+                                  ),
+                                ]),
+                          )
+                        ],
+                      ),
                     ));
           },
         ),
