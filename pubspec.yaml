@@ -40,6 +40,7 @@ dependencies:
   gauge_indicator: ^0.4.3
   flutter_offline: ^4.0.0
   flutter_bloc: ^9.0.0
+  dio: ^5.8.0+1
 
 dev_dependencies:
   
