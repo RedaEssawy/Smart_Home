@@ -5,11 +5,11 @@ import 'package:smart_home/core/util/assets.dart';
 import 'package:smart_home/core/util/topics.dart';
 
 import 'package:smart_home/core/widgets/text_card.dart';
-import 'package:smart_home/features/flowrate_room/cubit/flowrateroom_cubit.dart';
-import 'package:smart_home/features/flowrate_room/cubit/flowrateroom_state.dart';
-import 'package:smart_home/features/home/cubit/home_cubit.dart';
+import 'package:smart_home/controler/flowrateroom_cubit/flowrateroom_cubit.dart';
+import 'package:smart_home/controler/flowrateroom_cubit/flowrateroom_state.dart';
+import 'package:smart_home/controler/home_cubit/home_cubit.dart';
 
-import 'package:smart_home/features/home/home.dart';
+import 'package:smart_home/core/pages/home.dart';
 
 class FlowrateRoom extends StatefulWidget {
   const FlowrateRoom({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
-import 'package:smart_home/core/models/home_carousel_model.dart';
+import 'package:smart_home/models/home_carousel_model.dart';
 
 class HomeCarousel extends StatelessWidget {
   const HomeCarousel({super.key});

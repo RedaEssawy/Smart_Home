@@ -7,8 +7,8 @@ import 'package:smart_home/core/util/topics.dart';
 
 import 'package:smart_home/core/widgets/water_guage.dart';
 
-import 'package:smart_home/features/tank_room/cubit/tankroom_cubit.dart';
-import 'package:smart_home/features/tank_room/cubit/tankroom_state.dart';
+import 'package:smart_home/controler/tankroom_cubit/tankroom_cubit.dart';
+import 'package:smart_home/controler/tankroom_cubit/tankroom_state.dart';
 
 class TankRoom extends StatefulWidget {
   const TankRoom({super.key});

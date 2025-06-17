@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_home/core/pages/login_page.dart';
 import 'package:smart_home/core/pages/nav_bottom_page.dart';
 import 'package:smart_home/core/util/app_routes.dart';
-import 'package:smart_home/features/home/home.dart';
+import 'package:smart_home/core/pages/home.dart';
 
 import '../pages/register_page.dart';
 

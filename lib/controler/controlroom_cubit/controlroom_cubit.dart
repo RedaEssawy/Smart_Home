@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
+import 'package:smart_home/controler/controlroom_cubit/controlroom_state.dart';
 
 import 'package:smart_home/core/util/topics.dart';
-import 'package:smart_home/features/lekage_room/cubit/lekageroom_state.dart';
 
-class LekageroomCubit extends Cubit<LekageroomState> {
+class ControlroomCubit extends Cubit<ControlroomState> {
   final MqttClientPayloadBuilder _p = MqttClientPayloadBuilder();
   late MqttServerClient client;
-  LekageroomCubit(this.client) : super(IntilState());
-  static LekageroomCubit get(BuildContext context) => BlocProvider.of(context);
+  ControlroomCubit(this.client) : super(IntialState());
+  static ControlroomCubit get(BuildContext context) => BlocProvider.of(context);
 
   void publish(String topic, String data) {
     _p.addString(data);
@@ -29,30 +29,28 @@ class LekageroomCubit extends Cubit<LekageroomState> {
     routeData(event[0].topic, data);
   }
 
-  bool firstPIRSensor = false;
-  bool secondPIRSensor = false;
+  bool motor = false;
   bool tankValve = false;
   bool mainValve = false;
-
+  String tankLevel = '30';
   bool flowrate = false;
   bool cado = false;
   void routeData(String topic, String data) {
-    if (topic == Topics.firstPIRSensorTopic) {
-      //trim() to remove spaces from data that comes from mqtt
-      firstPIRSensor = bool.parse(data.trim());
-      emit(GtDtaState());
-    } else if (topic == Topics.secondPIRSensorTopic) {
-      secondPIRSensor = bool.parse(data.trim());
-      emit(GtDtaState());
+    if (topic == Topics.motorTankroomTopic) {
+      motor = bool.parse(data);
+      emit(GtDataState());
     } else if (topic == Topics.tankValveTankroomTopic) {
       tankValve = bool.parse(data);
-      emit(GtDtaState());
+      emit(GtDataState());
     } else if (topic == Topics.mainValveTankroomTopic) {
       mainValve = bool.parse(data);
-      emit(GtDtaState());
+      emit(GtDataState());
+    } else if (topic == Topics.tankLevelTankroomTopic) {
+      tankLevel = data;
+      emit(GtDataState());
     } else if (topic == Topics.cadoValveTopic) {
       cado = bool.parse(data);
-      emit(GtDtaState());
+      emit(GtDataState());
     }
   }
 }

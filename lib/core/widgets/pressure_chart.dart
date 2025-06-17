@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_home/features/home/cubit/home_cubit.dart';
+import 'package:smart_home/controler/home_cubit/home_cubit.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class PressureChart extends StatelessWidget {

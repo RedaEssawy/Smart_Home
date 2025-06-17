@@ -5,13 +5,13 @@ import 'package:mqtt_client/mqtt_client.dart';
 import 'package:smart_home/core/pages/nav_bottom_page.dart';
 import 'package:smart_home/core/util/app_router.dart';
 import 'package:smart_home/core/util/app_routes.dart';
-import 'package:smart_home/features/control_room/cubit/controlroom_cubit.dart';
-import 'package:smart_home/features/flowrate_room/cubit/flowrateroom_cubit.dart';
-import 'package:smart_home/features/home/cubit/home_cubit.dart';
+import 'package:smart_home/controler/controlroom_cubit/controlroom_cubit.dart';
+import 'package:smart_home/controler/flowrateroom_cubit/flowrateroom_cubit.dart';
+import 'package:smart_home/controler/home_cubit/home_cubit.dart';
 
-import 'package:smart_home/features/lekage_room/cubit/lekageroom_cubit.dart';
+import 'package:smart_home/controler/lekageroom_cubit/lekageroom_cubit.dart';
 
-import 'package:smart_home/features/tank_room/cubit/tankroom_cubit.dart';
+import 'package:smart_home/controler/tankroom_cubit/tankroom_cubit.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 
 void main() {

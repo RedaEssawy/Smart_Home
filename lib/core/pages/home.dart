@@ -4,12 +4,12 @@ import 'package:smart_home/core/util/assets.dart';
 import 'package:smart_home/core/util/topics.dart';
 import 'package:smart_home/core/widgets/home_carousel.dart';
 import 'package:smart_home/core/widgets/water_box.dart';
-import 'package:smart_home/features/control_room/control_room.dart';
-import 'package:smart_home/features/flowrate_room/flowrate_room.dart';
-import 'package:smart_home/features/home/cubit/home_cubit.dart';
+import 'package:smart_home/core/pages/control_room.dart';
+import 'package:smart_home/core/pages/flowrate_room.dart';
+import 'package:smart_home/controler/home_cubit/home_cubit.dart';
 
-import 'package:smart_home/features/lekage_room/lekage_room.dart';
-import 'package:smart_home/features/tank_room/tank_room.dart';
+import 'package:smart_home/core/pages/lekage_room.dart';
+import 'package:smart_home/core/pages/tank_room.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});

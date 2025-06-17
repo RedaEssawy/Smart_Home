@@ -4,9 +4,9 @@ import 'package:mqtt_client/mqtt_client.dart';
 import 'package:smart_home/core/util/assets.dart';
 import 'package:smart_home/core/util/topics.dart';
 import 'package:smart_home/core/widgets/devices_card.dart';
-import 'package:smart_home/features/home/home.dart';
-import 'package:smart_home/features/lekage_room/cubit/lekageroom_cubit.dart';
-import 'package:smart_home/features/lekage_room/cubit/lekageroom_state.dart';
+import 'package:smart_home/core/pages/home.dart';
+import 'package:smart_home/controler/lekageroom_cubit/lekageroom_cubit.dart';
+import 'package:smart_home/controler/lekageroom_cubit/lekageroom_state.dart';
 
 class LekageRoom extends StatefulWidget {
   const LekageRoom({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smart_home/features/control_room/control_room.dart';
-import 'package:smart_home/features/tank_room/tank_room.dart';
+import 'package:smart_home/core/pages/control_room.dart';
+import 'package:smart_home/core/pages/tank_room.dart';
 
 class DrawerPage extends StatefulWidget {
   const DrawerPage({super.key});
