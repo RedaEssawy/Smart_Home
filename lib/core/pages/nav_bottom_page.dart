@@ -29,24 +29,24 @@ class _NavBottomPageState extends State<NavBottomPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Text(
-            'Water Tracking',
-            style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                  color: Theme.of(context).primaryColor,
-                ),
-          ),
-        ),
-        leading: BackButton(onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    NavBottomPage()), // Replace with your page
-          );
-        }),
-      ),
+      // appBar: AppBar(
+      //   title: Center(
+      //     child: Text(
+      //       'Water Tracking',
+      //       style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+      //             color: Theme.of(context).primaryColor,
+      //           ),
+      //     ),
+      //   ),
+      //   leading: BackButton(onPressed: () {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //           builder: (context) =>
+      //               NavBottomPage()), // Replace with your page
+      //     );
+      //   }),
+      // ),
       // drawer: DrawerPage(),
       body: bodyOptions[_index],
       bottomNavigationBar: BottomNavigationBar(

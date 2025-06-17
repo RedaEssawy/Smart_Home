@@ -19,8 +19,9 @@ class WaterBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size; 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 50),
+      padding: const EdgeInsets.all(10),
       child: InkWell(
         onTap: () {
           Navigator.push(
@@ -29,9 +30,13 @@ class WaterBox extends StatelessWidget {
           );
         },
         child: Container(
+          width: size.width * 0.4,
+          height: size.height * 0.2,
           decoration: BoxDecoration(
+            
               borderRadius: BorderRadius.circular(30),
               image: DecorationImage(
+                
                   image: AssetImage(pageImage), fit: BoxFit.fill)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,

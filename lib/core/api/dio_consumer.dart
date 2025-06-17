@@ -1,13 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:smart_home/core/api/api_consumer.dart';
 import 'package:smart_home/core/api/api_interceptors.dart';
+import 'package:smart_home/core/api/end_points.dart';
 import 'package:smart_home/core/errors/exceptions.dart';
 
 class DioConsumer extends ApiConsumer {
   final Dio dio;
 
   DioConsumer({required this.dio}) {
-    dio.options.baseUrl = '';
+    dio.options.baseUrl = EndPoints.baseUrl;
     dio.interceptors.add(ApiInterceptors());
     dio.interceptors.add(LogInterceptor(
       responseBody: true,

@@ -1,5 +1,6 @@
 {
     "java.project.sourcePaths": [
         "linux"
-    ]
+    ],
+    "cmake.sourceDirectory": "/home/reda/Desktop/flutter_projects/smart_home_api/linux"
 }

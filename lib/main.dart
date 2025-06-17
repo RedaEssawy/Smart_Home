@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:smart_home/core/pages/nav_bottom_page.dart';
+import 'package:smart_home/core/util/app_router.dart';
+import 'package:smart_home/core/util/app_routes.dart';
 import 'package:smart_home/features/control_room/cubit/controlroom_cubit.dart';
 import 'package:smart_home/features/flowrate_room/cubit/flowrateroom_cubit.dart';
 import 'package:smart_home/features/home/cubit/home_cubit.dart';
@@ -83,6 +85,8 @@ class _MyAppState extends State<MyApp> {
         ),
       ],
       child: MaterialApp(
+        initialRoute: AppRoutes.loginRoute,
+        onGenerateRoute: AppRouter.generateRoute,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             iconTheme: IconThemeData(

@@ -1,7 +1,7 @@
 class EndPoints {
-  static String baseUrl = 'http://38.0.101.76:3000';
-  static String singIn = 'http://38.0.101.76:3000';
-  static String singUp = 'http://38.0.101.76:3000';
+  static String baseUrl = 'https://food-api-omega.vercel.app/api/v1/';
+  static String singIn = 'https://food-api-omega.vercel.app/api/v1/user/signin';
+  static String singUp = 'https://food-api-omega.vercel.app/api/v1/user/signup';
 }
 
 class ApiKey {
@@ -11,4 +11,5 @@ class ApiKey {
   static String password = 'password';
   static String token = 'token';
   static String id = 'id';
+  static String message = 'message';
 }

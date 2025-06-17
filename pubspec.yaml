@@ -29,9 +29,10 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
 
-  mqtt_client: ^10.5.1 
+  mqtt_client: ^10.5.1
   flutter:
     sdk: flutter
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -41,6 +42,12 @@ dependencies:
   flutter_offline: ^4.0.0
   flutter_bloc: ^9.0.0
   dio: ^5.8.0+1
+  flutter_native_splash: ^2.4.4
+  persistent_bottom_nav_bar: ^6.2.1
+  flutter_carousel_widget: ^3.1.0
+  jwt_decoder: ^2.0.1
+
+
 
 dev_dependencies:
   
@@ -86,6 +93,12 @@ flutter:
     - assets/images/Tank_level.png
     - assets/images/Flowrate_valve.jpg
     - assets/images/control.jpeg
+    - assets/icons/google_icon.png
+    - assets/images/carousel1.jpeg
+    - assets/images/carousel2.jpeg
+    - assets/images/carousel3.jpeg
+    - assets/images/carousel4.jpeg
+    - assets/images/carousel5.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:smart_home/core/util/assets.dart';
 import 'package:smart_home/core/util/topics.dart';
-import 'package:smart_home/core/widgets/pressure_chart.dart';
+import 'package:smart_home/core/widgets/home_carousel.dart';
 import 'package:smart_home/core/widgets/water_box.dart';
 import 'package:smart_home/features/control_room/control_room.dart';
 import 'package:smart_home/features/flowrate_room/flowrate_room.dart';
 import 'package:smart_home/features/home/cubit/home_cubit.dart';
-import 'package:smart_home/features/home/cubit/home_state.dart';
 
 import 'package:smart_home/features/lekage_room/lekage_room.dart';
 import 'package:smart_home/features/tank_room/tank_room.dart';
@@ -41,34 +39,21 @@ class _HomeState extends State<Home> {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color.fromRGBO(218, 237, 209, 0.867),
+        // backgroundColor: const Color.fromRGBO(218, 237, 209, 0.867),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 40, bottom: 10),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Your Pages',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      const Text(
-                        'See All',
-                        style: TextStyle(
-                          color: Color.fromARGB(170, 234, 225, 225),
-                        ),
-                      ),
-                    ]),
-              ),
+              
+              HomeCarousel(),
+              const SizedBox(height: 10),
               Expanded(
                 child: GridView.count(
-                  crossAxisSpacing: size.width * 0.03,
-                  mainAxisSpacing: size.width * 0.03,
+                  padding: EdgeInsets.all( size.width * 0.02),
+                  crossAxisSpacing: size.width * 0.02,
+                  mainAxisSpacing: size.height * 0.002,
                   crossAxisCount: isLandscap ? 4 : 2,
                   children: [
                     WaterBox(
@@ -102,13 +87,13 @@ class _HomeState extends State<Home> {
                   ],
                 ),
               ),
-              BlocBuilder<HomeCubit, HomeState>(
-                builder: (BuildContext context, state) {
-                  return PressureChart(
-                    pressureValues: HomeCubit.get(context).pressureValues,
-                  );
-                },
-              )
+              // BlocBuilder<HomeCubit, HomeState>(
+              //   builder: (BuildContext context, state) {
+              //     return PressureChart(
+              //       pressureValues: HomeCubit.get(context).pressureValues,
+              //     );
+              //   },
+              // )
             ],
           ),
         ),
