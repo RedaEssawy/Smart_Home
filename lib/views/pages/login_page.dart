@@ -29,14 +29,14 @@ class _LoginPageState extends State<LoginPage> {
                 body: SafeArea(
                     child: BlocConsumer<UserCubit, UserState>(
                   listener: (context, state) {
-                    // if (state is SignInSuccess) {
-                    //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    //     content: Text('Login Success'),
-                    //   ));
-                    // } else if (state is SignInFailure) {
-                    //   ScaffoldMessenger.of(context).showSnackBar(
-                    //       SnackBar(content: Text(state.errorMessage)));
-                    // }
+                    if (state is SignInSuccess) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text('Login Success'),
+                      ));
+                    } else if (state is SignInFailure) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(state.errorMessage)));
+                    }
                     // TODO: implement listener
                   },
                   builder: (context, state) {
@@ -106,10 +106,10 @@ class _LoginPageState extends State<LoginPage> {
                                             Size(constraint.maxWidth, 50)),
                                     onPressed: () {
                                       if (_formKey.currentState!.validate()) {
-                                        Navigator.of(context)
-                                            .pushNamed(AppRoutes.dashboardRoute);
+                                        // Navigator.of(context)
+                                        //     .pushNamed(AppRoutes.dashboardRoute);
 
-                                        // context.read<UserCubit>().signIn();
+                                        context.read<UserCubit>().signIn();
                                       }
                                     },
                                     child: Text('Login',
