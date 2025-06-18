@@ -4,12 +4,12 @@ import 'package:mqtt_client/mqtt_client.dart';
 import 'package:smart_home/core/util/assets.dart';
 import 'package:smart_home/core/util/topics.dart';
 
-import 'package:smart_home/core/widgets/text_card.dart';
+import 'package:smart_home/views/widgets/text_card.dart';
 import 'package:smart_home/controler/flowrateroom_cubit/flowrateroom_cubit.dart';
 import 'package:smart_home/controler/flowrateroom_cubit/flowrateroom_state.dart';
 import 'package:smart_home/controler/home_cubit/home_cubit.dart';
 
-import 'package:smart_home/core/pages/home.dart';
+import 'package:smart_home/views/pages/home.dart';
 
 class FlowrateRoom extends StatefulWidget {
   const FlowrateRoom({super.key});

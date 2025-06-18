@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:smart_home/cache/cache_helper.dart';
 import 'package:smart_home/core/api/api_consumer.dart';
 import 'package:smart_home/core/api/end_points.dart';
 import 'package:smart_home/core/errors/exceptions.dart';
@@ -57,7 +58,8 @@ final response = await api.post(EndPoints.singIn,data: {
   });
   user = SignInModel.ofJson(response.data);
   final decodedToken = JwtDecoder.decode(user!.token);
-  print(decodedToken['id']);
+  CacheHelper().saveData(key: ApiKey.token, value: user!.token);
+  CacheHelper().saveData(key: ApiKey.id, value: decodedToken[ApiKey.id]);
   emit(SignInSuccess());
 }on  ServerException catch (e){ 
   emit(SignInFailure(errorMessage:(e.errorModel.errorMessage)));

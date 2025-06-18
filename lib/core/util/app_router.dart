@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:smart_home/core/pages/login_page.dart';
-import 'package:smart_home/core/pages/nav_bottom_page.dart';
+import 'package:smart_home/views/pages/login_page.dart';
+import 'package:smart_home/views/pages/nav_bottom_page.dart';
 import 'package:smart_home/core/util/app_routes.dart';
-import 'package:smart_home/core/pages/home.dart';
+import 'package:smart_home/views/pages/home.dart';
 
-import '../pages/register_page.dart';
+import '../../views/pages/register_page.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {

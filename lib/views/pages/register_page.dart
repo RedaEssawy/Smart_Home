@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home/core/util/app_colors.dart';
 import 'package:smart_home/core/util/app_routes.dart';
-import 'package:smart_home/core/widgets/lable_with_text_field.dart';
-import 'package:smart_home/core/widgets/social_media_botton.dart';
+import 'package:smart_home/views/widgets/lable_with_text_field.dart';
+import 'package:smart_home/views/widgets/social_media_botton.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

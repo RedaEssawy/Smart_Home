@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mqtt_client/mqtt_client.dart';
-import 'package:smart_home/core/pages/nav_bottom_page.dart';
+import 'package:smart_home/views/pages/nav_bottom_page.dart';
 
 import 'package:smart_home/core/util/topics.dart';
 
-import 'package:smart_home/core/widgets/water_guage.dart';
+import 'package:smart_home/views/widgets/water_guage.dart';
 
 import 'package:smart_home/controler/tankroom_cubit/tankroom_cubit.dart';
 import 'package:smart_home/controler/tankroom_cubit/tankroom_state.dart';

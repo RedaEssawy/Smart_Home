@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smart_home/core/pages/control_room.dart';
-import 'package:smart_home/core/pages/home.dart';
-import 'package:smart_home/core/pages/tank_room.dart';
+import 'package:smart_home/views/pages/control_room.dart';
+import 'package:smart_home/views/pages/home.dart';
+import 'package:smart_home/views/pages/tank_room.dart';
 
 class NavBottomPage extends StatefulWidget {
   const NavBottomPage({super.key});
