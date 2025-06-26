@@ -11,6 +11,16 @@ class HomeCubit extends Cubit<HomeState> {
 
   static HomeCubit get(BuildContext context) => BlocProvider.of(context);
 
+/*************  ✨ Windsurf Command ⭐  *************/
+  /// Handle new data from MQTT broker.
+  ///
+  /// This function is called whenever we receive a new message from the MQTT
+  /// broker. It extracts the topic and the data from the message and calls
+  /// [routeData] to handle it.
+  ///
+  /// [event] is a list of [MqttReceivedMessage<MqttMessage>] and contains the
+  /// message received from the MQTT broker.
+///*******  d34da660-77c6-47ee-bb93-848f018aa523  *******/
   void getDataAndTopic(List<MqttReceivedMessage<MqttMessage>> event) {
     final MqttPublishMessage message = event[0].payload as MqttPublishMessage;
     final data =
@@ -19,25 +29,28 @@ class HomeCubit extends Cubit<HomeState> {
     routeData(event[0].topic, data);
   }
 
-  List<SaleData> pressureValues = [
-    // SaleData(x: 1, y: 35),
-    // SaleData(x: 2, y: 25),
-    // SaleData(x: 3, y: 45),
-    // SaleData(x: 4, y: 35)
+  List<SaleData> consumptionValue = [
+    SaleData(x: 1, y: 35),
+    SaleData(x: 2, y: 25),
+    SaleData(x: 3, y: 45),
+    SaleData(x: 4, y: 35),
+    SaleData(x: 5, y: 35),
+    SaleData(x: 6, y: 25),
+    SaleData(x: 7, y: 45),
+    SaleData(x: 8, y: 35)
   ];
 
   double pressure = 0;
 
   void routeData(String topic, String data) {
     if (topic == Topics.pressureSensorTopic) {
-      if (pressureValues.length <= 5) {
-        pressureValues
-            .add(SaleData(x: pressureValues.length + 1, y: double.parse(data)));
-        
+      if (consumptionValue.length <= 10) {
+        consumptionValue
+            .add(SaleData(x: consumptionValue.length + 1, y: double.parse(data)));
       } else {
-        pressureValues.removeAt(0);
-        pressureValues
-            .add(SaleData(x: pressureValues.length + 1, y: double.parse(data)));
+        consumptionValue.removeAt(0);
+        consumptionValue
+            .add(SaleData(x: consumptionValue.length + 1, y: double.parse(data)));
       }
       pressure = double.parse(data);
       emit(HomeGetDataState());

@@ -12,72 +12,55 @@ class SignUpPicture extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<UserCubit, UserState>(
-                          listener: (context, state) {
-                            // TODO: implement listener
-                          },
-                          builder: (context, state) {
-                            return SizedBox(
-                                height: 75,
-                                width:75,
-                                child: context.read<UserCubit>().profilePic ==
-                                        null
-                                    ? CircleAvatar(
-                                        backgroundColor: AppColors.grey,
-                                        child: Stack(
-                                          children: [
-                                            Positioned(
-                                                top: 5,
-                                                right: 5,
-                                                child: GestureDetector(
-                                                  onTap: () async {},
-                                                  child: Container(
-                                                    height:
-                                                        15,
-                                                    width:
-                                                        
-                                                            15,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          AppColors.deepPrple,
-                                                      border: Border.all(
-                                                          color:
-                                                              AppColors.white,
-                                                          ),
-                                                      borderRadius: BorderRadius
-                                                          .circular(20
-                                                                
-                                                              ),
-                                                    ),
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        ImagePicker()
-                                                            .pickImage(
-                                                                source:
-                                                                    ImageSource
-                                                                        .gallery)
-                                                            .then((value) => context
-                                                                .read<
-                                                                    UserCubit>()
-                                                                .uploadProfilePic(
-                                                                    value!));
-                                                      },
-                                                      child: Icon(
-                                                        size: 30,
-                                                        Icons.camera_alt_sharp,
-                                                        color: AppColors.grey3,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ))
-                                          ],
-                                        ))
-                                    : CircleAvatar(
-                                        backgroundImage: FileImage(File(context
+      listener: (context, state) {},
+      builder: (context, state) {
+        return SizedBox(
+            height: 75,
+            width: 75,
+            child: context.read<UserCubit>().profilePic == null
+                ? CircleAvatar(
+                    backgroundColor: AppColors.grey,
+                    child: Stack(
+                      children: [
+                        Positioned(
+                            top: 5,
+                            right: 5,
+                            child: GestureDetector(
+                              onTap: () async {},
+                              child: Container(
+                                height: 15,
+                                width: 15,
+                                decoration: BoxDecoration(
+                                  color: AppColors.deepPrple,
+                                  border: Border.all(
+                                    color: AppColors.white,
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    ImagePicker()
+                                        .pickImage(source: ImageSource.gallery)
+                                        // ignore: use_build_context_synchronously
+                                        .then((value) => context
                                             .read<UserCubit>()
-                                            .profilePic!
-                                            .path)),
-                                      ));
-                          },
-                        );
+                                            .uploadProfilePic(value!));
+                                  },
+                                  child: Icon(
+                                    size: 30,
+                                    Icons.camera_alt_sharp,
+                                    color: AppColors.grey3,
+                                  ),
+                                ),
+                              ),
+                            ))
+                      ],
+                    ))
+                : CircleAvatar(
+                    backgroundImage: FileImage(
+                        File(context.read<UserCubit>().profilePic!.path)),
+                  ));
+      },
+    );
   }
 }

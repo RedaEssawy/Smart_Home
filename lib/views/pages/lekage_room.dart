@@ -4,7 +4,6 @@ import 'package:mqtt_client/mqtt_client.dart';
 import 'package:smart_home/core/util/assets.dart';
 import 'package:smart_home/core/util/topics.dart';
 import 'package:smart_home/views/widgets/devices_card.dart';
-import 'package:smart_home/views/pages/home.dart';
 import 'package:smart_home/controler/lekageroom_cubit/lekageroom_cubit.dart';
 import 'package:smart_home/controler/lekageroom_cubit/lekageroom_state.dart';
 
@@ -45,9 +44,11 @@ class _LekageRoomState extends State<LekageRoom> {
 
   @override
   Widget build(BuildContext context) {
+   final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+
     return Scaffold(
       //to make the appBar take the same features of the body
-      extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: false,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         centerTitle: true,
@@ -58,81 +59,73 @@ class _LekageRoomState extends State<LekageRoom> {
             style: TextStyle(fontSize: 38, fontWeight: FontWeight.bold),
           ),
         ),
-        leading: BackButton(onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Home()), // Replace with your page
-          );
-        }),
+        // leading: BackButton(onPressed: () {
+        //   Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //         builder: (context) => Home()), // Replace with your page
+        //   );
+        // }),
       ),
       body: Container(
         padding: EdgeInsets.all(20),
         width: double.infinity,
         decoration: BoxDecoration(
-          image: DecorationImage(
-              // colorFilter: ColorFilter.linearToSrgbGamma(),
-              image: AssetImage(Assets.tankRoomImage),
-              fit: BoxFit.fill),
+          // image: DecorationImage(
+          //     // colorFilter: ColorFilter.linearToSrgbGamma(),
+          //     image: AssetImage(Assets.tankRoomImage),
+          //     fit: BoxFit.fill),
         ),
         child: BlocBuilder<LekageroomCubit, LekageroomState>(
           builder: (context, state) {
             return Column(
+              
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Container(
-                  width: double.infinity,
-                  height: 700,
-                  decoration: BoxDecoration(
-                      color: const Color.fromARGB(123, 233, 239, 241),
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(50),
-                          topRight: Radius.circular(50))),
-                  child: Expanded(
-                    child: GridView.count(
-                      padding: EdgeInsets.only(top: 5, bottom: 5),
-                      crossAxisCount: 2,
-                      children: [
-                        DevicesCard(
-                          deviceName: 'First API Sensor',
-                          deviceImage: Assets.activeSensorImage,
-                          deviceState:
-                              LekageroomCubit.get(context).firstPIRSensor,
+                Expanded(
+                  child: GridView.count(
+                    padding: EdgeInsets.only(top: 5, bottom: 5),
+                    crossAxisCount: isLandscape ? 4 : 2,
+                    children: [
+                      DevicesCard(
+                        deviceName: 'First API Sensor',
+                        deviceImage: Assets.activeSensorImage,
+                        deviceState:
+                            LekageroomCubit.get(context).firstPIRSensor,
+                        onChange: (value) {
+                          LekageroomCubit.get(context).publish(
+                              Topics.firstPIRSensorTopic, value.toString());
+                        },
+                      ),
+                      DevicesCard(
+                        deviceName: 'Second API Sensor',
+                        deviceImage: Assets.activeSensorImage,
+                        deviceState:
+                            LekageroomCubit.get(context).secondPIRSensor,
+                        onChange: (value) {
+                          LekageroomCubit.get(context).publish(
+                              Topics.secondPIRSensorTopic, value.toString());
+                        },
+                      ),
+                      DevicesCard(
+                          deviceState: LekageroomCubit.get(context).tankValve,
                           onChange: (value) {
                             LekageroomCubit.get(context).publish(
-                                Topics.firstPIRSensorTopic, value.toString());
+                                Topics.tankValveTankroomTopic,
+                                value.toString());
                           },
-                        ),
-                        DevicesCard(
-                          deviceName: 'Second API Sensor',
-                          deviceImage: Assets.activeSensorImage,
-                          deviceState:
-                              LekageroomCubit.get(context).secondPIRSensor,
+                          deviceName: 'Tank Valve',
+                          deviceImage: Assets.tankValveImage),
+                      DevicesCard(
+                          deviceState: LekageroomCubit.get(context).mainValve,
                           onChange: (value) {
                             LekageroomCubit.get(context).publish(
-                                Topics.secondPIRSensorTopic, value.toString());
+                                Topics.mainValveTankroomTopic,
+                                value.toString());
                           },
-                        ),
-                        DevicesCard(
-                            deviceState: LekageroomCubit.get(context).tankValve,
-                            onChange: (value) {
-                              LekageroomCubit.get(context).publish(
-                                  Topics.tankValveTankroomTopic,
-                                  value.toString());
-                            },
-                            deviceName: 'Tank Valve',
-                            deviceImage: Assets.tankValveImage),
-                        DevicesCard(
-                            deviceState: LekageroomCubit.get(context).mainValve,
-                            onChange: (value) {
-                              LekageroomCubit.get(context).publish(
-                                  Topics.mainValveTankroomTopic,
-                                  value.toString());
-                            },
-                            deviceName: 'Main Valve',
-                            deviceImage: Assets.tankValveImage)
-                      ],
-                    ),
+                          deviceName: 'Main Valve',
+                          deviceImage: Assets.tankValveImage)
+                    ],
                   ),
                 )
               ],

@@ -19,40 +19,30 @@ class WaterBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size; 
+    final size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => destinationPage),
-          );
-        },
-        child: Container(
-          width: size.width * 0.4,
-          height: size.height * 0.2,
-          decoration: BoxDecoration(
-            
-              borderRadius: BorderRadius.circular(30),
-              image: DecorationImage(
-                
-                  image: AssetImage(pageImage), fit: BoxFit.fill)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text(
-                pageName,
-                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+      child: Container(
+        width: size.width * 0.4,
+        height: size.height * 0.2,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+            image: DecorationImage(
+                image: AssetImage(pageImage), fit: BoxFit.fill)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              pageName,
+              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                    color: Theme.of(context).primaryColor,
+                  ),
+            ),
+            Text('$deviceName = $activeDevice',
+                style: Theme.of(context).textTheme.labelLarge!.copyWith(
                       color: Theme.of(context).primaryColor,
-                    ),
-              ),
-              Text('$deviceName = $activeDevice',
-                  style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                        color: Theme.of(context).primaryColor,
-                      ))
-            ],
-          ),
+                    ))
+          ],
         ),
       ),
     );

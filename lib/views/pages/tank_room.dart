@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mqtt_client/mqtt_client.dart';
-import 'package:smart_home/views/pages/nav_bottom_page.dart';
+import 'package:smart_home/controler/controlroom_cubit/controlroom_cubit.dart';
+import 'package:smart_home/controler/flowrateroom_cubit/flowrateroom_cubit.dart';
 
 import 'package:smart_home/core/util/topics.dart';
+import 'package:smart_home/views/widgets/form_text_with_its_value.dart';
 
 import 'package:smart_home/views/widgets/water_guage.dart';
 
@@ -18,6 +20,7 @@ class TankRoom extends StatefulWidget {
 }
 
 class _TankRoomState extends State<TankRoom> {
+  final flowrateController = TextEditingController();
   bool isWaterLevelLow = false;
   @override
   void initState() {
@@ -56,102 +59,159 @@ class _TankRoomState extends State<TankRoom> {
     });
   }
 
+ 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //to make the appBar take the same features of the body
-      extendBodyBehindAppBar: false,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        centerTitle: true,
-        title: Padding(
-          padding: const EdgeInsets.only(bottom: 20.0),
-          child: Text('Tank Status'),
+    return SafeArea(
+      child: Scaffold(
+        //to make the appBar take the same features of the body
+        extendBodyBehindAppBar: false,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          centerTitle: true,
+          title: Padding(
+            padding: const EdgeInsets.only(bottom: 20.0),
+            child: Text('Tank Status'),
+          ),
+          // leading: BackButton(
+          //   onPressed: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //           builder: (context) =>
+          //               NavBottomPage()), // Replace with your page
+          //     );
+          //   },
+          // ),
         ),
-        leading: BackButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      NavBottomPage()), // Replace with your page
-            );
-          },
-        ),
-      ),
-      body: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-            // image: DecorationImage(
-            //     // colorFilter: ColorFilter.linearToSrgbGamma(),
-            //     image: AssetImage(Assets.tankRoomImage),
-            //     fit: BoxFit.fill),
-            ),
-        child: BlocBuilder<TankroomCubit, TankroomState>(
-          builder: (BuildContext context, state) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                TankGuage(
-                  tankLevel: TankroomCubit.get(context).tankLevel,
-                  flowrateState: TankroomCubit.get(context).flowrate,
+        body: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+              // image: DecorationImage(
+              //     // colorFilter: ColorFilter.linearToSrgbGamma(),
+              //     image: AssetImage(Assets.tankRoomImage),
+              //     fit: BoxFit.fill),
+              ),
+          child: BlocBuilder<TankroomCubit, TankroomState>(
+            builder: (BuildContext context, state) {
+              return LayoutBuilder(builder: (context, constraints) => SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    TankGuage(
+                      tankLevel: TankroomCubit.get(context).tankLevel,
+                      flowrateState: TankroomCubit.get(context).flowrate,
+                    ),
+                    SizedBox(
+                      height:constraints.maxHeight * 0.01,
+                    ),
+                    if (isWaterLevelLow) _buildLowLevelAlert(),
+                    SizedBox(
+                      height: constraints.maxHeight * 0.01,
+                    ),
+                    
+                    FormTextWithItsValue(
+                        stateOrValue: FlowrateroomCubit.get(context).secondFlowrateSensor ==0.0 ? 'No' : 'Yes',
+                        title: 'Tank filling?',
+                        iconOfLeading: Icons.water_drop,
+                        context: context),
+                    SizedBox(
+                      height: constraints.maxHeight * 0.01,
+                    ),
+                    FormTextWithItsValue(
+                        stateOrValue:
+                            ControlroomCubit.get(context).motor.toString() == 'false' ? 'No' : 'Yes',
+                        title: 'Motor on ?',
+                        iconOfLeading: Icons.electrical_services,
+                        context: context),
+                    SizedBox(
+                      height: constraints.maxHeight * 0.01,
+                    ),
+                    FormTextWithItsValue(
+                        stateOrValue:
+                            ControlroomCubit.get(context).mainValve.toString()== 'false' ? 'No' : 'Yes',
+                        title: 'Main Valve on ?',
+                        iconOfLeading: Icons.water_drop,
+                        context: context),
+                    SizedBox(
+                      height: constraints.maxHeight * 0.01,
+                    ),
+                    FormTextWithItsValue(
+                        stateOrValue:
+                            ControlroomCubit.get(context).tankValve.toString() == 'false' ? 'No' : 'Yes',
+                        title: 'Secondary Valve on ?',
+                        iconOfLeading: Icons.water_drop,
+                        context: context),
+                    SizedBox(
+                      height: constraints.maxHeight * 0.01,
+                    ),
+                    FormTextWithItsValue(
+                        stateOrValue:
+                            ControlroomCubit.get(context).cado.toString() == 'false' ? 'No' : 'Yes',
+                        title: 'Services valve on ?',
+                        iconOfLeading: Icons.water_drop,
+                        context: context),
+                    SizedBox(
+                      height: constraints.maxHeight * 0.05,)
+                
+                    // FormTextWithItsValue(stateOrValue: TankroomCubit.get(context).flowrate.toString(), title: 'Flowrate', iconOfLeading: Icons.water_drop, context: context),
+                    // FormTextWithItsValue(stateOrValue: TankroomCubit.get(context).motor.toString(), title: 'Motor', iconOfLeading: Icons.water_drop, context: context),
+                
+                    // Container(
+                    //     width: double.infinity,
+                    //     height: 600,
+                    //     decoration: BoxDecoration(
+                    //         color: const Color.fromARGB(123, 233, 239, 241),
+                    //         borderRadius: BorderRadius.only(
+                    //             topLeft: Radius.circular(50),
+                    //             topRight: Radius.circular(50))),
+                
+                    // GridView.count(
+                    //     padding: EdgeInsets.only(top: 5),
+                    //     crossAxisCount: 2,
+                    //     children: [
+                    //       DevicesCard(
+                    //         deviceName: 'Motor',
+                    //         deviceImage: Assets.motorImage,
+                    //         deviceState: TankroomCubit.get(context).motor,
+                    //         onChange: (value) {
+                    //           TankroomCubit.get(context).publish(
+                    //               Topics.motorTankroomTopic, value.toString());
+                    //         },
+                    //       ),
+                    //       DevicesCard(
+                    //           //to change the state of the button of the tankValve
+                    //           deviceState: TankroomCubit.get(context).tankValve,
+                    //           onChange: (value) {
+                    //             //to publish on the topic when the putton pressed send event to the broker
+                    //             TankroomCubit.get(context).publish(
+                    //                 Topics.tankValveTankroomTopic,
+                    //                 value.toString());
+                    //             debugPrint('how i can help you ');
+                    //           },
+                    //           deviceName: 'Tank Valve',
+                    //           deviceImage: Assets.tankValveImage),
+                    //       DevicesCard(
+                    //           deviceState: TankroomCubit.get(context).mainValve,
+                    //           onChange: (value) {
+                    //             TankroomCubit.get(context).publish(
+                    //                 Topics.mainValveTankroomTopic,
+                    //                 value.toString());
+                    //           },
+                    //           deviceName: 'Main Valve',
+                    //           deviceImage: Assets.tankValveImage),
+                    //       TextCard(
+                    //           deviceName: 'Tank Level',
+                    //           deviceImage: Assets.tankLevelImage,
+                    //           stringValue: TankroomCubit.get(context).tankLevel)
+                    //     ]),
+                  ],
+                
+                  
                 ),
-                SizedBox(
-                  height: 30,
-                ),
-                if (isWaterLevelLow) _buildLowLevelAlert()
-
-                // Container(
-                //     width: double.infinity,
-                //     height: 600,
-                //     decoration: BoxDecoration(
-                //         color: const Color.fromARGB(123, 233, 239, 241),
-                //         borderRadius: BorderRadius.only(
-                //             topLeft: Radius.circular(50),
-                //             topRight: Radius.circular(50))),
-
-                // GridView.count(
-                //     padding: EdgeInsets.only(top: 5),
-                //     crossAxisCount: 2,
-                //     children: [
-                //       DevicesCard(
-                //         deviceName: 'Motor',
-                //         deviceImage: Assets.motorImage,
-                //         deviceState: TankroomCubit.get(context).motor,
-                //         onChange: (value) {
-                //           TankroomCubit.get(context).publish(
-                //               Topics.motorTankroomTopic, value.toString());
-                //         },
-                //       ),
-                //       DevicesCard(
-                //           //to change the state of the button of the tankValve
-                //           deviceState: TankroomCubit.get(context).tankValve,
-                //           onChange: (value) {
-                //             //to publish on the topic when the putton pressed send event to the broker
-                //             TankroomCubit.get(context).publish(
-                //                 Topics.tankValveTankroomTopic,
-                //                 value.toString());
-                //             debugPrint('how i can help you ');
-                //           },
-                //           deviceName: 'Tank Valve',
-                //           deviceImage: Assets.tankValveImage),
-                //       DevicesCard(
-                //           deviceState: TankroomCubit.get(context).mainValve,
-                //           onChange: (value) {
-                //             TankroomCubit.get(context).publish(
-                //                 Topics.mainValveTankroomTopic,
-                //                 value.toString());
-                //           },
-                //           deviceName: 'Main Valve',
-                //           deviceImage: Assets.tankValveImage),
-                //       TextCard(
-                //           deviceName: 'Tank Level',
-                //           deviceImage: Assets.tankLevelImage,
-                //           stringValue: TankroomCubit.get(context).tankLevel)
-                //     ]),
-              ],
-            );
-          },
+              ));
+            },
+          ),
         ),
       ),
     );

@@ -42,9 +42,11 @@ class ServerException implements Exception {
             errorModel: ErrorModel.fromJson(e.response!.data));
       case DioExceptionType.badResponse:
        switch (e.response?.statusCode) {
+        // 400: message means bad request 
          case 400:
            throw ServerException(
                errorModel: ErrorModel.fromJson(e.response!.data));
+               
          case 401:
            throw ServerException(
                errorModel: ErrorModel.fromJson(e.response!.data));

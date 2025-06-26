@@ -7,17 +7,19 @@ class HomeCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-final size =MediaQuery.of(context).size;
-    return LayoutBuilder(builder: (context, constraints) => 
-    FlutterCarousel.builder(itemCount: homeCarouselImages.length, itemBuilder: (context, index, realIndex) =>
-     Image.asset(homeCarouselImages[index].imageUrl,fit: BoxFit.fitWidth,), 
-    options:FlutterCarouselOptions(
-      height: size.height*0.25,
-      autoPlay: true,
-      enlargeCenterPage: true,
-      viewportFraction: 0.9,
-      aspectRatio: 2
-    
-    ) ));
+    final size = MediaQuery.of(context).size;
+    return LayoutBuilder(
+        builder: (context, constraints) => FlutterCarousel.builder(
+            itemCount: homeCarouselImages.length,
+            itemBuilder: (context, index, realIndex) => Image.asset(
+                  homeCarouselImages[index].imageUrl,
+                  fit: BoxFit.fitWidth,
+                ),
+            options: FlutterCarouselOptions(
+                height: size.height * 0.25,
+                autoPlay: true,
+                enlargeCenterPage: true,
+                viewportFraction: 0.9,
+                aspectRatio: 2)));
   }
 }

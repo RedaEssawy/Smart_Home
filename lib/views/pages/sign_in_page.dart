@@ -8,14 +8,14 @@ import 'package:smart_home/core/util/app_routes.dart';
 import 'package:smart_home/views/widgets/lable_with_text_field.dart';
 import 'package:smart_home/views/widgets/social_media_botton.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignInPage extends StatefulWidget {
+  const SignInPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignInPage> createState() => _SignInPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignInPageState extends State<SignInPage> {
   bool _hiddenPassword = true;
   Widget icon = Icon(Icons.remove_red_eye_outlined);
 
@@ -39,13 +39,13 @@ class _LoginPageState extends State<LoginPage> {
               body: SafeArea(
                   child: BlocConsumer<UserCubit, UserState>(
                 listener: (context, state) {
-                  Navigator.pushNamed(context, AppRoutes.dashboardRoute);
+                  // Navigator.pushNamed(context, AppRoutes.dashboardRoute);
                   if (state is SignInSuccess) {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text('Login Success'),
                     ));
                     //if login success get user data
-                    context.read().getUserData();
+                    // context.read().getUserData();
                     // if login success navigate to home
                     Navigator.pushNamed(context, AppRoutes.homeRoute);
                   } else if (state is SignInFailure) {

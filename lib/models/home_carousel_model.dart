@@ -14,6 +14,4 @@ List<HomeCarouselModel> homeCarouselImages = [
   HomeCarouselModel(id: '3', imageUrl: 'assets/images/carousel3.jpeg'),
   HomeCarouselModel(id: '4', imageUrl: 'assets/images/carousel4.jpeg'),
   HomeCarouselModel(id: '5', imageUrl: 'assets/images/carousel5.jpeg'),
-
-
 ];

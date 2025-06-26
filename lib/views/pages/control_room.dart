@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mqtt_client/mqtt_client.dart';
+import 'package:smart_home/core/util/app_colors.dart';
 import 'package:smart_home/core/util/assets.dart';
 import 'package:smart_home/core/util/topics.dart';
 import 'package:smart_home/views/widgets/devices_card.dart';
@@ -16,6 +17,8 @@ class ControlRoom extends StatefulWidget {
 }
 
 class _ControlRoomState extends State<ControlRoom> {
+  bool _controllCase = true;
+
   @override
   void initState() {
     ControlroomCubit.get(context)
@@ -41,6 +44,8 @@ class _ControlRoomState extends State<ControlRoom> {
 
   @override
   Widget build(BuildContext context) {
+    // final buttonController = TextEditingController();
+
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -80,7 +85,8 @@ class _ControlRoomState extends State<ControlRoom> {
             return LayoutBuilder(
                 builder: (context, constraints) => SingleChildScrollView(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment. center,
                         children: [
                           ClipRRect(
                             //ClipRRect: to make the image rounded corners to make it look like a circle
@@ -93,61 +99,109 @@ class _ControlRoomState extends State<ControlRoom> {
                               width: size.width * 0.9,
                             ),
                           ),
-                          Container(
-                            width: constraints.maxWidth,
-                            height: constraints.maxHeight,
-                            padding:
-                                EdgeInsets.all(constraints.maxWidth * 0.001),
-                            child: GridView.count(
-                                mainAxisSpacing: constraints.maxHeight * 0.01,
-                                padding:
-                                    EdgeInsets.all(constraints.maxWidth * 0.01),
-                                crossAxisCount: isLandscap ? 4 : 2,
-                                children: [
-                                  DevicesCard(
-                                    deviceName: 'Main Valve',
-                                    deviceImage: Assets.tankValveImage,
-                                    deviceState:
-                                        ControlroomCubit.get(context).mainValve,
-                                    onChange: (value) {
-                                      ControlroomCubit.get(context).publish(
-                                          Topics.mainValveTankroomTopic,
-                                          value.toString());
-                                    },
-                                  ),
-                                  DevicesCard(
-                                      deviceState: ControlroomCubit.get(context)
-                                          .tankValve,
-                                      onChange: (value) {
-                                        ControlroomCubit.get(context).publish(
-                                            Topics.tankValveTankroomTopic,
-                                            value.toString());
-                                      },
-                                      deviceName: 'Tank Valve',
-                                      deviceImage: Assets.tankValveImage),
-                                  DevicesCard(
-                                      deviceState:
-                                          ControlroomCubit.get(context).cado,
-                                      onChange: (value) {
-                                        ControlroomCubit.get(context).publish(
-                                            Topics.cadoValveTopic,
-                                            value.toString());
-                                      },
-                                      deviceName: 'Cado Valve',
-                                      deviceImage: Assets.tankValveImage),
-                                  DevicesCard(
-                                    deviceName: 'Motor',
-                                    deviceImage: Assets.motorImage,
-                                    deviceState:
-                                        ControlroomCubit.get(context).motor,
-                                    onChange: (value) {
-                                      ControlroomCubit.get(context).publish(
-                                          Topics.motorTankroomTopic,
-                                          value.toString());
-                                    },
-                                  ),
-                                ]),
-                          )
+                          SizedBox(
+                            height: constraints.maxHeight * 0.02,
+                          ),
+                          ElevatedButton(
+                            style: ButtonStyle(
+                              shape: WidgetStateProperty.all( StadiumBorder(side: BorderSide(color: AppColors.green))),
+                              
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _controllCase = !_controllCase;
+                              });
+                            },
+                            // statesController: buttonController
+
+                            child: Text(
+                              'Automatic Control',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall!
+                                  .copyWith(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          SizedBox(
+                            height: constraints.maxHeight * 0.02,
+                          ),
+                          _controllCase
+                              ? Container(
+                                  width: constraints.maxWidth,
+                                  height: constraints.maxHeight,
+                                  padding: EdgeInsets.all(
+                                      constraints.maxWidth * 0.001),
+                                  child: GridView.count(
+                                      mainAxisSpacing:
+                                          constraints.maxHeight * 0.01,
+                                      padding: EdgeInsets.all(
+                                          constraints.maxWidth * 0.01),
+                                      crossAxisCount: isLandscap ? 4 : 2,
+                                      children: [
+                                        DevicesCard(
+                                          deviceName: 'Main Valve',
+                                          deviceImage: Assets.tankValveImage,
+                                          deviceState:
+                                              ControlroomCubit.get(context)
+                                                  .mainValve,
+                                          onChange: (value) {
+                                            ControlroomCubit.get(context)
+                                                .publish(
+                                                    Topics
+                                                        .mainValveTankroomTopic,
+                                                    value.toString());
+                                          },
+                                        ),
+                                        DevicesCard(
+                                            deviceState:
+                                                ControlroomCubit.get(context)
+                                                    .tankValve,
+                                            onChange: (value) {
+                                              ControlroomCubit.get(context)
+                                                  .publish(
+                                                      Topics
+                                                          .tankValveTankroomTopic,
+                                                      value.toString());
+                                            },
+                                            deviceName: 'Tank Valve',
+                                            deviceImage: Assets.tankValveImage),
+                                        DevicesCard(
+                                            deviceState:
+                                                ControlroomCubit.get(context)
+                                                    .cado,
+                                            onChange: (value) {
+                                              ControlroomCubit.get(context)
+                                                  .publish(
+                                                      Topics.cadoValveTopic,
+                                                      value.toString());
+                                            },
+                                            deviceName: 'Services Valve',
+                                            deviceImage: Assets.tankValveImage),
+                                        DevicesCard(
+                                          deviceName: 'Motor',
+                                          deviceImage: Assets.motorImage,
+                                          deviceState:
+                                              ControlroomCubit.get(context)
+                                                  .motor,
+                                          onChange: (value) {
+                                            ControlroomCubit.get(context)
+                                                .publish(
+                                                    Topics.motorTankroomTopic,
+                                                    value.toString());
+                                          },
+                                        ),
+                                      ]),
+                                )
+                              : SizedBox(
+                                  width: constraints.maxWidth,
+                                  height: constraints.maxHeight*.7,
+                                  child: Image(
+                                  image: Image.asset(
+                                          'assets/images/automatic-control.png',
+                                          )
+                                      .image,
+                                  fit: BoxFit.contain,
+                                ))
                         ],
                       ),
                     ));

@@ -1,7 +1,14 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:mqtt_client/mqtt_client.dart';
+import 'package:smart_home/cache/cache_helper.dart';
+import 'package:smart_home/controler/consumption_cubit/consumption_cubit.dart';
+import 'package:smart_home/controler/user_cubit/user_cubit.dart';
+import 'package:smart_home/core/api/dio_consumer.dart';
+import 'package:smart_home/repositories/consumption_repository.dart';
+import 'package:smart_home/repositories/user_repository.dart';
 import 'package:smart_home/views/pages/nav_bottom_page.dart';
 import 'package:smart_home/core/util/app_router.dart';
 import 'package:smart_home/core/util/app_routes.dart';
@@ -13,8 +20,7 @@ import 'package:smart_home/controler/lekageroom_cubit/lekageroom_cubit.dart';
 
 import 'package:smart_home/controler/tankroom_cubit/tankroom_cubit.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
-
-void main() {
+void main()  {
   // final MqttServerClient client =
   //     MqttServerClient.withPort('broker.hivemq.com', 'clientIdentifier', 1883);
   // MqttClientPayloadBuilder p = MqttClientPayloadBuilder();
@@ -36,7 +42,15 @@ void main() {
   //     });
 
   // runApp(MyApp(client: client));
-  runApp(const MyApp());
+  
+  
+   WidgetsFlutterBinding.ensureInitialized();
+
+  //  await Firebase.initializeApp();
+
+   CacheHelper().init();
+
+   runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -83,6 +97,21 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<HomeCubit>(
           create: (BuildContext context) => HomeCubit(client),
         ),
+        BlocProvider<UserCubit>(
+          create: (BuildContext context) => UserCubit(UserRepository(
+              api: DioConsumer(
+            dio: Dio(),
+          ))),
+        ),
+        BlocProvider<ConsumptionCubit>(
+            create: (BuildContext context) =>
+                ConsumptionCubit(ConsumptionRepository(
+                    api: DioConsumer(
+                  dio: Dio(),
+                )))),
+        // BlocProvider<AuthCubit>(
+        //   create: (BuildContext context) => AuthCubit(),
+        // )
       ],
       child: MaterialApp(
         initialRoute: AppRoutes.loginRoute,

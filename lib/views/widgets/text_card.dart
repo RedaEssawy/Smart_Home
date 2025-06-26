@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_home/core/util/app_colors.dart';
 
 class TextCard extends StatelessWidget {
   // final TextEditingController _nmberController = TextEditingController();
@@ -18,7 +19,7 @@ class TextCard extends StatelessWidget {
         builder: (context, constraints) => Card(
               margin: EdgeInsets.all(constraints.maxWidth * 0.025),
               elevation: 3,
-              color: Colors.transparent,
+              color: AppColors.grey3,
               shape: ContinuousRectangleBorder(
                   borderRadius:
                       BorderRadius.circular(constraints.maxWidth * 0.4)),
@@ -42,14 +43,14 @@ class TextCard extends StatelessWidget {
                                 .textTheme
                                 .labelLarge!
                                 .copyWith(
-                                  color: Theme.of(context).primaryColor,
+                                  color:AppColors.black,
                                 )),
                         Text('$stringValue',
                             style: Theme.of(context)
                                 .textTheme
                                 .headlineMedium!
                                 .copyWith(
-                                    color: Theme.of(context).primaryColor,
+                                    color: AppColors.black,
                                     fontWeight: FontWeight.bold)),
                       ],
                     ),

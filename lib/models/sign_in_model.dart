@@ -11,6 +11,4 @@ class SignInModel {
       token: json[ApiKey.token],
     );
   }
-
-
 }

@@ -23,7 +23,6 @@ class DioConsumer extends ApiConsumer {
       {Object? data,
       Map<String, dynamic>? queryParameters,
       bool isFormData = false}) async {
-    // TODO: implement delete
     try {
       final response = await dio.delete(path,
           data: isFormData

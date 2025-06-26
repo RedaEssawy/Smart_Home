@@ -8,6 +8,7 @@ class LableWithTextField extends StatefulWidget {
   final IconData prefixIcon;
   final String hintText;
   final String title;
+  final String? Function(String?)? validator;
 
   const LableWithTextField(
       {super.key,
@@ -15,6 +16,7 @@ class LableWithTextField extends StatefulWidget {
       required this.controller,
       required this.prefixIcon,
       this.sufixIcon,
+      this.validator,
       required this.hintText,
       this.obscureText = false});
 
@@ -36,7 +38,7 @@ class _LableWithTextFieldState extends State<LableWithTextField> {
               .copyWith(fontWeight: FontWeight.w600),
         ),
         TextFormField(
-          validator: (value)=> value == null || value.isEmpty ? '${widget.title}  can not be empty!' :null,
+          validator:widget.validator,
           controller: widget.controller,
           obscureText: widget.obscureText,
           decoration: InputDecoration(
