@@ -28,7 +28,7 @@ class UserCubit extends Cubit<UserState> {
         required String email,
       required String password,
       required String confirmPassword,
-      required String name,
+      required String username,
       required String phoneNumber}) async {
     emit(SignUpLoading());
     final response = await userRepository.signUp(
@@ -36,13 +36,13 @@ class UserCubit extends Cubit<UserState> {
         email: email,
         password: password,
         confirmPassword: confirmPassword,
-        name: name,
+        username: username,
         phoneNumber: phoneNumber,
         // profilePic: profilePic!
         );
     response.fold(
         (errorMessage) => emit(SignUpFailure(errorMessage: errorMessage)),
-        (signUpModel) => emit(SignUpSuccess(message: signUpModel.message)));
+        (signInModel) => emit(SignInSuccess()));
   }
 
   uploadProfilePic(XFile image) {
@@ -50,10 +50,10 @@ class UserCubit extends Cubit<UserState> {
     emit(UploadProfilePic());
   }
 
-  signIn({required String email, required String password}) async {
+  signIn({required String usernameOrPhone, required String password}) async {
     emit(SignInLoading());
     final response =
-        await userRepository.signIn(email: email, password: password);
+        await userRepository.signIn(usernameOrPhone: usernameOrPhone, password: password);
     response.fold(
         (errorMessage) => emit(SignInFailure(errorMessage: errorMessage)),
         (signInModel) => emit(SignInSuccess()));

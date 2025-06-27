@@ -149,7 +149,7 @@ class _SignInPageState extends State<SignInPage> {
                                         // Navigator.of(context)
                                         //     .pushNamed(AppRoutes.dashboardRoute);
     
-                                        context.read<UserCubit>().signIn(email: emailController.text, password: passwordController.text);
+                                        context.read<UserCubit>().signIn(usernameOrPhone: emailController.text, password: passwordController.text);
                                       }
                                     },
                                     child: Text('Login',

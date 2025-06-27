@@ -1,73 +1,69 @@
 import 'package:dartz/dartz.dart';
 // import 'package:image_picker/image_picker.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:smart_home/cache/cache_helper.dart';
 import 'package:smart_home/core/api/api_consumer.dart';
 import 'package:smart_home/core/api/end_points.dart';
 import 'package:smart_home/core/errors/exceptions.dart';
 // import 'package:smart_home/core/functions/upload_image_to_api.dart';
 import 'package:smart_home/models/sign_in_model.dart';
-import 'package:smart_home/models/sign_up_model.dart';
-import 'package:smart_home/models/user_model.dart';
 
 class UserRepository {
   final ApiConsumer api;
 
   UserRepository({required this.api});
   Future<Either<String, SignInModel>> signIn(
-      {required String email, required String password}) async {
+      {required String usernameOrPhone, required String password}) async {
     try {
       final response = await api.post(EndPoints.singIn,
-          data: {ApiKey.email: email, ApiKey.password: password});
+          data: {ApiKey.name: usernameOrPhone, ApiKey.password: password});
       // print(response.data[ApiKey.token]);
-      final user = SignInModel.ofJson(response);
-      final decodedToken = JwtDecoder.decode(user.token);
+      final user = SignInModel.fromJson(response);
+      // final decodedToken = JwtDecoder.decode(user.token);
 
-      CacheHelper().saveData(key: ApiKey.token, value: user.token);
-      CacheHelper().saveData(key: ApiKey.id, value: decodedToken[ApiKey.id]);
+      CacheHelper().saveData(key: ApiKey.token, value: response[ApiKey.token]); //user.token);
+      // CacheHelper().saveData(key: ApiKey.id, value: decodedToken[ApiKey.id]);
       return Right(user);
     } on ServerException catch (e) {
       return Left(e.errorModel.errorMessage);
     }
   }
 
-  Future<Either<String, SignUpModel>> signUp(
+  Future<Either<String, SignInModel>> signUp(
 
       {
       required String fullName,  
       required String email,
       required String password,
       required String confirmPassword,
-      required String name,
+      required String username,
       required String phoneNumber,
       // required XFile profilePic
       }) async {
     try {
       final response =
-          await api.post(EndPoints.singUp, isFormData: true, data: {
+          await api.post(EndPoints.singUp, isFormData: false, data: {
         ApiKey.fullName: fullName,
-        ApiKey.name: name,
+        ApiKey.username: username,
         ApiKey.phone: phoneNumber,
         ApiKey.email: email,
         ApiKey.password: password,
         ApiKey.confirmPassword: confirmPassword,
         ApiKey.location:
-            '{"name":"methalfa","address":"meet halfa","coordinates":[30.1572709,31.224779]}',
+            '123 Street',
         // ApiKey.profilePic: await uploadImageToApi(profilePic)
       });
-      final signUpModel = SignUpModel.fromJson(response);
-      return Right(signUpModel);
+      final signInModel = SignInModel.fromJson(response);
+      return Right(signInModel);
     } on ServerException catch (e) {
       return Left(e.errorModel.errorMessage);
     }
   }
 
-  Future<Either<String, UserModel>> getUserProfile() async {
+  Future<Either<String, User>> getUserProfile() async {
     try {
-      final response = await api.get(EndPoints.getUserDataEndPoint(
-          CacheHelper().getData(key: ApiKey.token)));
-
-      return Right(UserModel.fromJson(response));
+      final response = await api.get('/api/profile/');
+      
+      return Right(User.fromJson(response));
     } on ServerException catch (e) {
       return Left(e.errorModel.errorMessage);
     }

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:smart_home/cache/cache_helper.dart';
 import 'package:smart_home/core/api/api_consumer.dart';
 import 'package:smart_home/core/api/api_interceptors.dart';
 import 'package:smart_home/core/api/end_points.dart';
@@ -14,9 +15,13 @@ class DioConsumer extends ApiConsumer {
       responseBody: true,
       requestBody: true,
       error: true,
-      requestHeader: false,
+      requestHeader: true,
       responseHeader: false,
+      
     ));
+    dio.options.headers = {
+      'Authorization': 'Token ${CacheHelper().getData(key: ApiKey.token)}',
+    };
   }
   @override
   Future delete(String path,

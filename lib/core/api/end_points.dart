@@ -1,5 +1,5 @@
 class EndPoints {
-  static String baseUrl = 'http://192.168.1.7:8000';
+  static String baseUrl = 'https://a958-197-134-78-134.ngrok-free.app';
   static String singIn = '/api/login/';
   static String singUp = '/api/register/';
   static String getConsumptionRateEndPoint = '/api/water-consumption/';
@@ -9,19 +9,23 @@ class EndPoints {
 }
 
 class ApiKey {
+  static String username = 'username';
+   static String phone = 'phone_number';
+  static String email = 'email';
+
   static String fullName = 'full_name';
-  static String name = 'username_or_phone';
-  static String phone = 'phone_number';
-  static String confirmPassword = 'password2';
   static String location = 'home_address';
+  static String password = 'password';
+  static String confirmPassword = 'password2';
+  
+  static String name = 'username_or_phone';
+ 
   static String profilePic = 'profilePic';
   static String status = 'status';
   static String errorMessage = 'ErrorMessage';
-  static String email = 'email';
-  static String password = 'password';
   static String token = 'token';
-  static String id = 'id';
-  static String message = 'message';
+  static String id ='id';
+  static String message = 'user';
   static String monthlyConsumption = 'monthlyConsumption';
   static String weeklyConsumption = 'weeklyConsumption';
   static String dailyConsumption = 'dailyConsumption';

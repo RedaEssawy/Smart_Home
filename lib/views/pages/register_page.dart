@@ -32,7 +32,7 @@ class _RegisterPageState extends State<RegisterPage> {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(state.message),
           ));
-          Navigator.pushNamed(context, AppRoutes.homeRoute);
+          Navigator.pushNamed(context, AppRoutes.dashboardRoute);
         } else if (state is SignUpFailure) {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(state.errorMessage)));
@@ -183,10 +183,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                             password: passwordController.text,
                                             confirmPassword:
                                                 confirmPasswordController.text,
-                                            name: _userControler.text,
+                                            username: _userControler.text,
                                             phoneNumber: phoneController.text);
-                                        Navigator.of(context).pushNamed(
-                                            AppRoutes.dashboardRoute);
+                                        
                                       }
                                     },
                                     child: Text('Register',

@@ -33,14 +33,16 @@ class ProfilePage extends StatelessWidget {
                           SizedBox(height: 20),
                           CircleAvatar(
                             radius: 50,
-                            backgroundImage: NetworkImage(state
-                                    is GetUserDataSuccess
-                                ? state.user.profilePic
-                                : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'),
+                            backgroundImage: NetworkImage(
+                              // state
+                                    // is GetUserDataSuccess
+                                // ? state.user.profilePic
+                                // : 
+                                'https://cdn-icons-png.flaticon.com/512/149/149071.png'),
                           ),
                           Text(
                             state is GetUserDataSuccess
-                                ? state.user.name
+                                ? state.user.username.toString()
                                 : 'User Name',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 20),
@@ -48,27 +50,27 @@ class ProfilePage extends StatelessWidget {
                           SizedBox(height: 20),
                           ProfileItemInfo(
                             title: state is GetUserDataSuccess
-                                ? state.user.name
+                                ? state.user.username.toString()
                                 : 'User Name',
                             iconType: Icons.person,
                           ),
                           SizedBox(height: 20),
                           ProfileItemInfo(
                               title: state is GetUserDataSuccess
-                                  ? state.user.email
+                                  ? state.user.email.toString()
                                   : 'email',
                               iconType: Icons.email),
                           SizedBox(height: 20),
                           ProfileItemInfo(
                             title: state is GetUserDataSuccess
-                                ? state.user.phone
+                                ? state.user.phoneNumber.toString()
                                 : 'phone number',
                             iconType: Icons.phone,
                           ),
                           SizedBox(height: 20),
                           ProfileItemInfo(
                             title: state is GetUserDataSuccess
-                                ? state.user.address['type']
+                                ? state.user.homeAddress.toString()
                                 : 'address',
                             iconType: Icons.location_on,
                           ),

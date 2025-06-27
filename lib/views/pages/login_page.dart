@@ -32,22 +32,26 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    // final cubit = BlocProvider.of<AuthCubit>(context);
+      
+
+    final cubit = BlocProvider.of<UserCubit>(context);
 
     return LayoutBuilder(
         builder: (context, constraint) => Scaffold(
               body: SafeArea(
                   child: BlocConsumer<UserCubit, UserState>(
                 listener: (context, state) {
-                  Navigator.pushNamed(context, AppRoutes.dashboardRoute);
-                  if (state is SignInSuccess) {
+                  // Navigator.pushNamed(context, AppRoutes.dashboardRoute);
+                  if (state is SignInSuccess)  {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text('Login Success'),
                     ));
-                    //if login success get user data
-                    context.read().getUserData();
+                    // //if login success get user data
+                    
+                   cubit.getUserProfile();
                     // if login success navigate to home
-                    Navigator.pushNamed(context, AppRoutes.homeRoute);
+                    print('success');
+                    Navigator.pushNamed(context, AppRoutes.dashboardRoute);
                   } else if (state is SignInFailure) {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text(state.errorMessage)));
@@ -136,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                             SizedBox(height: constraint.maxHeight * 0.03),
                             state is SignInLoading
                                 ? CircularProgressIndicator()
-                                : ElevatedButton(
+                                :  ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor: AppColors.deepPrple,
                                         minimumSize:
@@ -149,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                                         // Navigator.of(context)
                                         //     .pushNamed(AppRoutes.dashboardRoute);
     
-                                        context.read<UserCubit>().signIn(email: emailController.text, password: passwordController.text);
+                                       await context.read<UserCubit>().signIn(usernameOrPhone: emailController.text, password: passwordController.text);
                                       }
                                     },
                                     child: Text('Login',

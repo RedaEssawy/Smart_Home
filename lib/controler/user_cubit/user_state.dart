@@ -31,7 +31,7 @@ final class SignUpSuccess extends UserState {
 
 // get user data states
 final class GetUserDataSuccess extends UserState {
-  final UserModel user;
+  final User user;
   GetUserDataSuccess({required this.user});
 }
 
