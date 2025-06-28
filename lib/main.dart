@@ -5,9 +5,11 @@ import 'package:flutter_offline/flutter_offline.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:smart_home/cache/cache_helper.dart';
 import 'package:smart_home/controler/consumption_cubit/consumption_cubit.dart';
+import 'package:smart_home/controler/tank_and_flow_cubit/tank_and_flow_cubit.dart';
 import 'package:smart_home/controler/user_cubit/user_cubit.dart';
 import 'package:smart_home/core/api/dio_consumer.dart';
 import 'package:smart_home/repositories/consumption_repository.dart';
+import 'package:smart_home/repositories/tank_and_flow_repo.dart';
 import 'package:smart_home/repositories/user_repository.dart';
 import 'package:smart_home/views/pages/nav_bottom_page.dart';
 import 'package:smart_home/core/util/app_router.dart';
@@ -61,9 +63,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  MqttClientPayloadBuilder p = MqttClientPayloadBuilder();
+   MqttClientPayloadBuilder p = MqttClientPayloadBuilder();
   final MqttServerClient client =
-      //    MqttServerClient.withPort('broker.emqx.io', 'clientIdentifier', 1883);
+        //  MqttServerClient.withPort('broker.emqx.io', 'clientIdentifier', 1883);
       MqttServerClient.withPort('test.mosquitto.org', 'clientIdentifier', 1883);
   bool clientState = false;
 
@@ -103,6 +105,9 @@ class _MyAppState extends State<MyApp> {
             dio: Dio(),
           ))),
         ),
+        BlocProvider<TankAndFlowCubit>(
+          create: (BuildContext context) => TankAndFlowCubit(tankAndFlowRepo:  TankAndFlowRepo( DioConsumer(dio: Dio()))),
+        ),
         BlocProvider<ConsumptionCubit>(
             create: (BuildContext context) =>
                 ConsumptionCubit(ConsumptionRepository(
@@ -114,7 +119,8 @@ class _MyAppState extends State<MyApp> {
         // )
       ],
       child: MaterialApp(
-        initialRoute: AppRoutes.loginRoute,
+        initialRoute:AppRoutes.loginRoute,
+        // CacheHelper().getData(key: 'token') != null ? AppRoutes.dashboardRoute : AppRoutes.loginRoute,
         onGenerateRoute: AppRouter.generateRoute,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

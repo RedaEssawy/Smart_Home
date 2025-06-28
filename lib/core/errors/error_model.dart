@@ -1,7 +1,7 @@
 import 'package:smart_home/core/api/end_points.dart';
 
 class ErrorModel {
-  final int status;
+  final String status;
   final String errorMessage;
 
   ErrorModel({required this.status, required this.errorMessage});

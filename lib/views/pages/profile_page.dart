@@ -42,7 +42,7 @@ class ProfilePage extends StatelessWidget {
                           ),
                           Text(
                             state is GetUserDataSuccess
-                                ? state.user.username.toString()
+                                ? state.userModel.username.toString()
                                 : 'User Name',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 20),
@@ -50,27 +50,27 @@ class ProfilePage extends StatelessWidget {
                           SizedBox(height: 20),
                           ProfileItemInfo(
                             title: state is GetUserDataSuccess
-                                ? state.user.username.toString()
+                                ? state.userModel.username.toString()
                                 : 'User Name',
                             iconType: Icons.person,
                           ),
                           SizedBox(height: 20),
                           ProfileItemInfo(
                               title: state is GetUserDataSuccess
-                                  ? state.user.email.toString()
+                                  ? state.userModel.email.toString()
                                   : 'email',
                               iconType: Icons.email),
                           SizedBox(height: 20),
                           ProfileItemInfo(
                             title: state is GetUserDataSuccess
-                                ? state.user.phoneNumber.toString()
+                                ? state.userModel.phoneNumber.toString()
                                 : 'phone number',
                             iconType: Icons.phone,
                           ),
                           SizedBox(height: 20),
                           ProfileItemInfo(
                             title: state is GetUserDataSuccess
-                                ? state.user.homeAddress.toString()
+                                ? state.userModel.homeAddress.toString()
                                 : 'address',
                             iconType: Icons.location_on,
                           ),

@@ -7,8 +7,9 @@ import 'package:smart_home/core/errors/exceptions.dart';
 
 class DioConsumer extends ApiConsumer {
   final Dio dio;
+  bool needToken  ;
 
-  DioConsumer({required this.dio}) {
+  DioConsumer({required this.dio, this.needToken=true}) {
     dio.options.baseUrl = EndPoints.baseUrl;
     dio.interceptors.add(ApiInterceptors());
     dio.interceptors.add(LogInterceptor(
@@ -19,15 +20,22 @@ class DioConsumer extends ApiConsumer {
       responseHeader: false,
       
     ));
+    if(needToken == true)
+    {
     dio.options.headers = {
       'Authorization': 'Token ${CacheHelper().getData(key: ApiKey.token)}',
     };
-  }
+  }}
   @override
   Future delete(String path,
       {Object? data,
       Map<String, dynamic>? queryParameters,
-      bool isFormData = false}) async {
+      bool isFormData = false,
+      BaseOptions? options
+      
+        
+      
+      }) async {
     try {
       final response = await dio.delete(path,
           data: isFormData
@@ -42,7 +50,7 @@ class DioConsumer extends ApiConsumer {
 
   @override
   Future get(String path,
-      {Object? data, Map<String, dynamic>? queryParameters}) async {
+      {Object? data, Map<String, dynamic>? queryParameters ,BaseOptions? options}) async {
     try {
       final response =
           await dio.get(path, data: data, queryParameters: queryParameters);
@@ -56,7 +64,10 @@ class DioConsumer extends ApiConsumer {
   Future post(String path,
       {Object? data,
       Map<String, dynamic>? queryParameters,
-      bool isFormData = false}) async {
+      bool isFormData = false,
+      BaseOptions? options
+      
+      }) async {
     try {
       final response = await dio.post(path,
           data: isFormData
@@ -73,7 +84,8 @@ class DioConsumer extends ApiConsumer {
   Future put(String path,
       {Object? data,
       Map<String, dynamic>? queryParameters,
-      bool isFormData = false}) async {
+      bool isFormData = false,
+      BaseOptions? options}) async {
     try {
       final response = await dio.put(path,
           data: isFormData

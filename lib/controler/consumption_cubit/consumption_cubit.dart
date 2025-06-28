@@ -6,6 +6,7 @@ part 'consumption_state.dart';
 
 class ConsumptionCubit extends Cubit<ConsumptionState> {
   final ConsumptionRepository consumptionRepository;
+  List<ConsumptionModel> consumptionModels=[];
   ConsumptionCubit(this.consumptionRepository) : super(ConsumptionInitial());
   getConsumptionRate() async {
     emit(GetConsumptionRateLoading());
@@ -13,8 +14,13 @@ class ConsumptionCubit extends Cubit<ConsumptionState> {
     result.fold(
       (errorMessage) =>
           emit(GetConsumptionRateFailure(errorMessage: errorMessage)),
-      (consumptionModel) =>
-          emit(GetConsumptionRateSccess(consumptionModel: consumptionModel)),
+      (consumptionModel) {
+        emit(GetConsumptionRateSccess(consumptionModel: consumptionModel));
+        consumptionModels=consumptionModel;
+        // print('consumptionModels $consumptionModels');
+        
+
+      },
     );
   }
 
@@ -31,19 +37,22 @@ class ConsumptionCubit extends Cubit<ConsumptionState> {
     ConsumptionData(x: 10, y: 11),
   ];
 
+  
+
   void routeData(ConsumptionModel consumptionModel) {
     if (consumptionData.length <= 10) {
       consumptionData.add(ConsumptionData(
           x: consumptionData.length + 1,
-          y: double.parse(consumptionModel.dailyConsumption)));
+          y: double.parse(consumptionModel.consumption.toString())));
     } else {
       consumptionData.removeAt(0);
       consumptionData.add(ConsumptionData(
           x: consumptionData.length + 1,
-          y: double.parse(consumptionModel.dailyConsumption)));
+          y: double.parse(consumptionModels[3].toString())));
     }
   }
 }
+
 
 class ConsumptionData {
   final double x;

@@ -6,7 +6,7 @@ sealed class ConsumptionState {}
 final class ConsumptionInitial extends ConsumptionState {}
 
 final class GetConsumptionRateSccess  extends ConsumptionState {
-  final ConsumptionModel consumptionModel;
+  final List<ConsumptionModel> consumptionModel;
   GetConsumptionRateSccess({required this.consumptionModel});
 }
 

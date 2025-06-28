@@ -20,7 +20,7 @@ class UserCubit extends Cubit<UserState> {
     final response = await userRepository.getUserProfile();
     response.fold(
         (errorMessage) => emit(GetUserDataFailure(errorMessage: errorMessage)),
-        (userModel) => emit(GetUserDataSuccess(user: userModel)));
+        (userModel) => emit(GetUserDataSuccess(userModel: userModel)));
   }
 
   signUp(

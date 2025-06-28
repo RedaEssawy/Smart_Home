@@ -5,9 +5,9 @@ import 'package:smart_home/core/api/end_points.dart';
 class ApiInterceptors extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    options.headers[ApiKey.token] =
+    options.headers['Authorization'] =
         CacheHelper().getData(key: ApiKey.token) != null
-            ? 'FOODAPI ${CacheHelper().getData(key: ApiKey.token)}'
+            ? 'Token ${CacheHelper().getData(key: ApiKey.token)}'
             : null;
     super.onRequest(options, handler);
   }

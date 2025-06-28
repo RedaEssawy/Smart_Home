@@ -35,6 +35,7 @@ class _LoginPageState extends State<LoginPage> {
       
 
     final cubit = BlocProvider.of<UserCubit>(context);
+    
 
     return LayoutBuilder(
         builder: (context, constraint) => Scaffold(
@@ -50,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                     
                    cubit.getUserProfile();
                     // if login success navigate to home
-                    print('success');
+                    // print('success');
                     Navigator.pushNamed(context, AppRoutes.dashboardRoute);
                   } else if (state is SignInFailure) {
                     ScaffoldMessenger.of(context).showSnackBar(

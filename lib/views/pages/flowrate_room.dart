@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:smart_home/controler/consumption_cubit/consumption_cubit.dart';
+import 'package:smart_home/controler/tank_and_flow_cubit/tank_and_flow_cubit.dart';
 import 'package:smart_home/core/util/assets.dart';
 import 'package:smart_home/core/util/topics.dart';
 import 'package:smart_home/views/widgets/form_text_with_its_value.dart';
@@ -18,8 +19,18 @@ class FlowrateRoom extends StatefulWidget {
 }
 
 class _FlowrateRoomState extends State<FlowrateRoom> {
+
   @override
   void initState() {
+    final cubit = BlocProvider.of<ConsumptionCubit>(context);
+    cubit.getConsumptionRate();
+
+    final cubit2 = BlocProvider.of<TankAndFlowCubit>(context);
+    cubit2.getTankAndFlow();
+
+    // ConsumptionCubit(ConsumptionRepository(
+    //   api: DioConsumer(dio: Dio()),
+    // )).getConsumptionRate();
     FlowrateroomCubit.get(context)
         .client
         .subscribe(Topics.mainFlowrateTankroomTopic, MqttQos.atMostOnce);
@@ -36,6 +47,8 @@ class _FlowrateRoomState extends State<FlowrateRoom> {
 
   @override
   Widget build(BuildContext context) {
+    
+    
     return Scaffold(
       //to make the appBar take the same features of the body
       extendBodyBehindAppBar: false,
@@ -67,51 +80,55 @@ class _FlowrateRoomState extends State<FlowrateRoom> {
                       padding: EdgeInsets.all(10),
                       crossAxisCount: 2,
                       children: [
-                        BlocBuilder<FlowrateroomCubit, FlowrateroomState>(
+                        BlocConsumer<TankAndFlowCubit, TankAndFlowState>(
+                          listener: (context, state) => {},
                           
                           builder: (context, state) {
                             return TextCard(
                                 deviceName: 'Main Flowrate sensor',
                                 deviceImage: Assets.pressureValueImage,
-                                stringValue: FlowrateroomCubit.get(context)
-                                    .mainFlowrateSensor);
+                                stringValue: context.read<TankAndFlowCubit>().tankAndFlowModels[0].value
+                                );
                           },
                         ),
                         TextCard(
                             deviceName: 'Second Flowrate sensor',
                             deviceImage: Assets.pressureValueImage,
-                            stringValue: FlowrateroomCubit.get(context)
-                                .secondFlowrateSensor),
+                            stringValue: context.read<TankAndFlowCubit>().tankAndFlowModels[1].value),
                       ],
                     ),
                   ),
                   SizedBox(height: 20),
                   BlocConsumer<ConsumptionCubit, ConsumptionState>(
                     listener: (context, state) {
+                      if (state is GetConsumptionRateSccess) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(SnackBar(content: Text('Success')));
+                      }
                     },
                     builder: (context, state) {
                       return Column(
                         children: [
                           FormTextWithItsValue(
-                              stateOrValue: state is GetConsumptionRateSccess? '${state.consumptionModel.last12hoursConsumption} M^3' : '0 M^3',
-                              title: 'Last 12 hr consumption',
+                              stateOrValue: state is GetConsumptionRateSccess ? '${state.consumptionModel[0].consumption} M^3' : '0 M^3',
+                              title: 'Total consumption',
                               iconOfLeading: Icons.water_drop_outlined,
                               context: context),
                           SizedBox(height: 20),
                           FormTextWithItsValue(
-                              stateOrValue: state is GetConsumptionRateSccess? '${state.consumptionModel.dailyConsumption} M^3' : '0 M^3',
+                              stateOrValue: state is GetConsumptionRateSccess? '${state.consumptionModel[3].consumption} M^3' : '0 M^3',
                               title: 'Daily consumption',
                               iconOfLeading: Icons.water_drop_outlined,
                               context: context),
                           SizedBox(height: 20),
                           FormTextWithItsValue(
-                              stateOrValue: state is GetConsumptionRateSccess? '${state.consumptionModel.weeklyConsumption} M^3' : '0 M^3',
+                              stateOrValue: state is GetConsumptionRateSccess? '${state.consumptionModel[2].consumption} M^3' : '0 M^3',
                               title: 'Weekly consumption',
                               iconOfLeading: Icons.water_drop_outlined,
                               context: context),
                           SizedBox(height: 20),
                           FormTextWithItsValue(
-                              stateOrValue: state is GetConsumptionRateSccess? '${state.consumptionModel.monthlyConsumption} M^3' : '0 M^3',
+                              stateOrValue: state is GetConsumptionRateSccess? '${state.consumptionModel[1].consumption} M^3' : '0 M^3',
                               title: 'Monthly consumption',
                               iconOfLeading: Icons.water_drop_outlined,
                               context: context),
