@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:smart_home/cache/cache_helper.dart';
 import 'package:smart_home/core/api/api_consumer.dart';
 import 'package:smart_home/core/api/api_interceptors.dart';
 import 'package:smart_home/core/api/end_points.dart';
@@ -7,9 +6,9 @@ import 'package:smart_home/core/errors/exceptions.dart';
 
 class DioConsumer extends ApiConsumer {
   final Dio dio;
-  bool needToken  ;
+  
 
-  DioConsumer({required this.dio, this.needToken=true}) {
+  DioConsumer({required this.dio, }) {
     dio.options.baseUrl = EndPoints.baseUrl;
     dio.interceptors.add(ApiInterceptors());
     dio.interceptors.add(LogInterceptor(
@@ -20,12 +19,8 @@ class DioConsumer extends ApiConsumer {
       responseHeader: false,
       
     ));
-    if(needToken == true)
-    {
-    dio.options.headers = {
-      'Authorization': 'Token ${CacheHelper().getData(key: ApiKey.token)}',
-    };
-  }}
+    
+  }
   @override
   Future delete(String path,
       {Object? data,

@@ -9,7 +9,6 @@ import 'package:smart_home/views/widgets/form_text_with_its_value.dart';
 
 import 'package:smart_home/views/widgets/text_card.dart';
 import 'package:smart_home/controler/flowrateroom_cubit/flowrateroom_cubit.dart';
-import 'package:smart_home/controler/flowrateroom_cubit/flowrateroom_state.dart';
 
 class FlowrateRoom extends StatefulWidget {
   const FlowrateRoom({super.key});
@@ -87,14 +86,14 @@ class _FlowrateRoomState extends State<FlowrateRoom> {
                             return TextCard(
                                 deviceName: 'Main Flowrate sensor',
                                 deviceImage: Assets.pressureValueImage,
-                                stringValue: context.read<TankAndFlowCubit>().tankAndFlowModels[0].value
+                                stringValue: context.read<TankAndFlowCubit>().tankAndFlowModels.firstWhere((item)=>item.metricType=='main_flow_rate').value
                                 );
                           },
                         ),
                         TextCard(
                             deviceName: 'Second Flowrate sensor',
                             deviceImage: Assets.pressureValueImage,
-                            stringValue: context.read<TankAndFlowCubit>().tankAndFlowModels[1].value),
+                            stringValue: context.read<TankAndFlowCubit>().tankAndFlowModels.firstWhere((item)=>item.metricType=='secondary_flow_rate').value),
                       ],
                     ),
                   ),
@@ -110,25 +109,25 @@ class _FlowrateRoomState extends State<FlowrateRoom> {
                       return Column(
                         children: [
                           FormTextWithItsValue(
-                              stateOrValue: state is GetConsumptionRateSccess ? '${state.consumptionModel[0].consumption} M^3' : '0 M^3',
+                              stateOrValue: state is GetConsumptionRateSccess ? '${state.consumptionModel.firstWhere((item)=>item.period=='total').consumption} M^3' : '0 M^3',
                               title: 'Total consumption',
                               iconOfLeading: Icons.water_drop_outlined,
                               context: context),
                           SizedBox(height: 20),
                           FormTextWithItsValue(
-                              stateOrValue: state is GetConsumptionRateSccess? '${state.consumptionModel[3].consumption} M^3' : '0 M^3',
+                              stateOrValue: state is GetConsumptionRateSccess? '${state.consumptionModel.firstWhere((item)=>item.period=='daily').consumption} M^3' : '0 M^3',
                               title: 'Daily consumption',
                               iconOfLeading: Icons.water_drop_outlined,
                               context: context),
                           SizedBox(height: 20),
                           FormTextWithItsValue(
-                              stateOrValue: state is GetConsumptionRateSccess? '${state.consumptionModel[2].consumption} M^3' : '0 M^3',
+                              stateOrValue: state is GetConsumptionRateSccess? '${state.consumptionModel.firstWhere((item)=>item.period=='weekly').consumption} M^3' : '0 M^3',
                               title: 'Weekly consumption',
                               iconOfLeading: Icons.water_drop_outlined,
                               context: context),
                           SizedBox(height: 20),
                           FormTextWithItsValue(
-                              stateOrValue: state is GetConsumptionRateSccess? '${state.consumptionModel[1].consumption} M^3' : '0 M^3',
+                              stateOrValue: state is GetConsumptionRateSccess? '${state.consumptionModel.firstWhere((item)=>item.period=='monthly').consumption} M^3' : '0 M^3',
                               title: 'Monthly consumption',
                               iconOfLeading: Icons.water_drop_outlined,
                               context: context),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_home/cache/cache_helper.dart';
 import 'package:smart_home/controler/user_cubit/user_cubit.dart';
 import 'package:smart_home/core/api/dio_consumer.dart';
 import 'package:smart_home/core/util/app_colors.dart';
@@ -81,6 +82,17 @@ class ProfilePage extends StatelessWidget {
                             onTap: () {
                               Navigator.pushNamed(context, AppRoutes.settingRoute);
                               
+                            },
+                          ),
+                          SizedBox(height: 20),
+                          ProfileItemInfo(
+                            title: 'Logout',
+                            iconType: Icons.logout,
+                            onTap: () {
+                              context.read<UserCubit>().logOut();
+                              CacheHelper().clear();
+                              Navigator.pushNamedAndRemoveUntil(
+                                  context, AppRoutes.loginRoute, (route) => false);
                             },
                           ),
                         ],

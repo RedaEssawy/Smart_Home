@@ -5,10 +5,12 @@ import 'package:flutter_offline/flutter_offline.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:smart_home/cache/cache_helper.dart';
 import 'package:smart_home/controler/consumption_cubit/consumption_cubit.dart';
+import 'package:smart_home/controler/motor_cubit/motor_cubit.dart';
 import 'package:smart_home/controler/tank_and_flow_cubit/tank_and_flow_cubit.dart';
 import 'package:smart_home/controler/user_cubit/user_cubit.dart';
 import 'package:smart_home/core/api/dio_consumer.dart';
 import 'package:smart_home/repositories/consumption_repository.dart';
+import 'package:smart_home/repositories/motor_repo.dart';
 import 'package:smart_home/repositories/tank_and_flow_repo.dart';
 import 'package:smart_home/repositories/user_repository.dart';
 import 'package:smart_home/views/pages/nav_bottom_page.dart';
@@ -22,7 +24,7 @@ import 'package:smart_home/controler/lekageroom_cubit/lekageroom_cubit.dart';
 
 import 'package:smart_home/controler/tankroom_cubit/tankroom_cubit.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
-void main()  {
+void main() async {
   // final MqttServerClient client =
   //     MqttServerClient.withPort('broker.hivemq.com', 'clientIdentifier', 1883);
   // MqttClientPayloadBuilder p = MqttClientPayloadBuilder();
@@ -47,10 +49,12 @@ void main()  {
   
   
    WidgetsFlutterBinding.ensureInitialized();
+  await CacheHelper().init();
+  //  await CacheHelper.sharedPreferences.clear();
+  
 
   //  await Firebase.initializeApp();
 
-   CacheHelper().init();
 
    runApp(const MyApp());
 }
@@ -114,6 +118,8 @@ class _MyAppState extends State<MyApp> {
                     api: DioConsumer(
                   dio: Dio(),
                 )))),
+                BlocProvider<MotorCubit>(create:(BuildContext context) =>
+                 MotorCubit(motorRepo: MotorRepo(api:  DioConsumer(dio: Dio()))) )
         // BlocProvider<AuthCubit>(
         //   create: (BuildContext context) => AuthCubit(),
         // )

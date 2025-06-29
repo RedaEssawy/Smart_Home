@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mqtt_client/mqtt_client.dart';
+import 'package:smart_home/controler/motor_cubit/motor_cubit.dart';
 import 'package:smart_home/core/util/app_colors.dart';
 import 'package:smart_home/core/util/assets.dart';
 import 'package:smart_home/core/util/topics.dart';
+import 'package:smart_home/views/pages/profile_page.dart';
 import 'package:smart_home/views/widgets/devices_card.dart';
 import 'package:smart_home/controler/controlroom_cubit/controlroom_state.dart';
+import 'package:smart_home/views/widgets/lable_with_text_field.dart';
 
 import '../../controler/controlroom_cubit/controlroom_cubit.dart';
 
@@ -18,9 +21,13 @@ class ControlRoom extends StatefulWidget {
 
 class _ControlRoomState extends State<ControlRoom> {
   bool _controllCase = true;
+  // final motorStatus = TextEditingController();
 
   @override
   void initState() {
+// final cubit = BlocProvider.of<MotorCubit>(context);
+    // cubit.setMotorState(motorStatus: );
+
     ControlroomCubit.get(context)
         .client
         .subscribe(Topics.motorTankroomTopic, MqttQos.atMostOnce);
@@ -86,7 +93,7 @@ class _ControlRoomState extends State<ControlRoom> {
                 builder: (context, constraints) => SingleChildScrollView(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment. center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           ClipRRect(
                             //ClipRRect: to make the image rounded corners to make it look like a circle
@@ -104,8 +111,8 @@ class _ControlRoomState extends State<ControlRoom> {
                           ),
                           ElevatedButton(
                             style: ButtonStyle(
-                              shape: WidgetStateProperty.all( StadiumBorder(side: BorderSide(color: AppColors.green))),
-                              
+                              shape: WidgetStateProperty.all(StadiumBorder(
+                                  side: BorderSide(color: AppColors.green))),
                             ),
                             onPressed: () {
                               setState(() {
@@ -131,77 +138,99 @@ class _ControlRoomState extends State<ControlRoom> {
                                   height: constraints.maxHeight,
                                   padding: EdgeInsets.all(
                                       constraints.maxWidth * 0.001),
-                                  child: GridView.count(
-                                      mainAxisSpacing:
-                                          constraints.maxHeight * 0.01,
-                                      padding: EdgeInsets.all(
-                                          constraints.maxWidth * 0.01),
-                                      crossAxisCount: isLandscap ? 4 : 2,
-                                      children: [
-                                        DevicesCard(
-                                          deviceName: 'Main Valve',
-                                          deviceImage: Assets.tankValveImage,
-                                          deviceState:
-                                              ControlroomCubit.get(context)
-                                                  .mainValve,
-                                          onChange: (value) {
-                                            ControlroomCubit.get(context)
-                                                .publish(
-                                                    Topics
-                                                        .mainValveTankroomTopic,
-                                                    value.toString());
-                                          },
-                                        ),
-                                        DevicesCard(
-                                            deviceState:
-                                                ControlroomCubit.get(context)
-                                                    .tankValve,
-                                            onChange: (value) {
-                                              ControlroomCubit.get(context)
-                                                  .publish(
-                                                      Topics
-                                                          .tankValveTankroomTopic,
-                                                      value.toString());
-                                            },
-                                            deviceName: 'Tank Valve',
-                                            deviceImage: Assets.tankValveImage),
-                                        DevicesCard(
-                                            deviceState:
-                                                ControlroomCubit.get(context)
-                                                    .cado,
-                                            onChange: (value) {
-                                              ControlroomCubit.get(context)
-                                                  .publish(
-                                                      Topics.cadoValveTopic,
-                                                      value.toString());
-                                            },
-                                            deviceName: 'Services Valve',
-                                            deviceImage: Assets.tankValveImage),
-                                        DevicesCard(
-                                          deviceName: 'Motor',
-                                          deviceImage: Assets.motorImage,
-                                          deviceState:
-                                              ControlroomCubit.get(context)
-                                                  .motor,
-                                          onChange: (value) {
-                                            ControlroomCubit.get(context)
-                                                .publish(
-                                                    Topics.motorTankroomTopic,
-                                                    value.toString());
-                                          },
-                                        ),
+                                      child: Column(
+                                        children: [
+                                        // LableWithTextField(title: 'Motor', controller: motorController,  prefixIcon: Icons.engineering  , hintText: "Motor",),
                                       ]),
+
+                                  // child: GridView.count(
+                                  //     mainAxisSpacing:
+                                  //         constraints.maxHeight * 0.01,
+                                  //     padding: EdgeInsets.all(
+                                  //         constraints.maxWidth * 0.01),
+                                  //     crossAxisCount: isLandscap ? 4 : 2,
+                                  //     children: [
+                                  //       DevicesCard(
+                                  //         deviceName: 'Main Valve',
+                                  //         deviceImage:
+                                  //             Assets.tankValveImage,
+                                  //         deviceState:
+                                  //             ControlroomCubit.get(context)
+                                  //                 .mainValve,
+                                  //         onChange: (value) {
+                                  //           ControlroomCubit.get(context)
+                                  //               .publish(
+                                  //                   Topics
+                                  //                       .mainValveTankroomTopic,
+                                  //                   value.toString());
+                                  //         },
+                                  //       ),
+                                  //       DevicesCard(
+                                  //           deviceState:
+                                  //               ControlroomCubit.get(
+                                  //                       context)
+                                  //                   .tankValve,
+                                  //           onChange: (value) {
+                                  //             ControlroomCubit.get(context)
+                                  //                 .publish(
+                                  //                     Topics
+                                  //                         .tankValveTankroomTopic,
+                                  //                     value.toString());
+                                  //           },
+                                  //           deviceName: 'Tank Valve',
+                                  //           deviceImage:
+                                  //               Assets.tankValveImage),
+                                  //       DevicesCard(
+                                  //           deviceState:
+                                  //               ControlroomCubit.get(
+                                  //                       context)
+                                  //                   .cado,
+                                  //           onChange: (value) {
+                                  //             ControlroomCubit.get(context)
+                                  //                 .publish(
+                                  //                     Topics.cadoValveTopic,
+                                  //                     value.toString());
+                                  //           },
+                                  //           deviceName: 'Services Valve',
+                                  //           deviceImage:
+                                  //               Assets.tankValveImage),
+                                  //       BlocConsumer<MotorCubit,
+                                  //           MotorState>(
+                                  //         listener: (context, state) {},
+                                  //         builder: (context, state) {
+                                  //           return DevicesCard(
+                                  //             deviceName: 'Motor',
+                                  //             deviceImage:
+                                  //                 Assets.motorImage,
+                                  //             deviceState:
+                                  //                 ControlroomCubit.get(
+                                  //                         context)
+                                  //                     .motor,
+                                  //             onChange: (value) {
+                                  //               state is MotorSuccess
+                                  //                   ? state.motorModel.payload  : false;
+                                  //               // ControlroomCubit.get(
+                                  //               //         context)
+                                  //               //     .publish(
+                                  //               //         Topics
+                                  //               //             .motorTankroomTopic,
+                                  //               //         value.toString()
+                                  //                       // );
+                                  //             },
+                                  //           );
+                                  //         },
+                                  //       ),
+                                  //     ]),
                                 )
                               : SizedBox(
                                   width: constraints.maxWidth,
-                                  height: constraints.maxHeight*.7,
+                                  height: constraints.maxHeight * .7,
                                   child: Image(
-                                  image: Image.asset(
-                                          'assets/images/automatic-control.png',
-                                          )
-                                      .image,
-                                  fit: BoxFit.contain,
-                                ))
+                                    image: Image.asset(
+                                      'assets/images/automatic-control.png',
+                                    ).image,
+                                    fit: BoxFit.contain,
+                                  ))
                         ],
                       ),
                     ));

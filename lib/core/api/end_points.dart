@@ -1,15 +1,19 @@
 class EndPoints {
-  static String baseUrl = 'https://a70a-197-134-78-134.ngrok-free.app';
+  static String baseUrl = 'https://8299-197-134-78-134.ngrok-free.app';
   static String singIn = '/api/login/';
   static String singUp = '/api/register/';
   static String getConsumptionRateEndPoint = '/api/water-consumption/';
   static String getTankAndFlowEndPoint = '/api/tank-flow/';
+  static String logOutEndPoint = '/api/logout/';
+  static String getMotorStatusEndPoint = '/api/control-device/';
   static String getUserDataEndPoint(id) {
     return '/api/profile/$id';
   }
 }
 
 class ApiKey {
+  static String topic ='topic';
+  static String payload = 'payload';
   static String username = 'username';
    static String phone = 'phone_number';
   static String email = 'email';

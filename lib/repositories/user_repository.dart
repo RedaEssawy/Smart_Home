@@ -5,6 +5,7 @@ import 'package:smart_home/cache/cache_helper.dart';
 import 'package:smart_home/core/api/api_consumer.dart';
 import 'package:smart_home/core/api/end_points.dart';
 import 'package:smart_home/core/errors/exceptions.dart';
+import 'package:smart_home/models/log_out_model.dart';
 // import 'package:smart_home/core/functions/upload_image_to_api.dart';
 import 'package:smart_home/models/sign_in_model.dart';
 import 'package:smart_home/models/user_model.dart';
@@ -31,6 +32,8 @@ class UserRepository {
     }
   }
 
+  
+
   Future<Either<String, SignInModel>> signUp({
     required String fullName,
     required String email,
@@ -53,6 +56,7 @@ class UserRepository {
         // ApiKey.profilePic: await uploadImageToApi(profilePic)
       });
       final signInModel = SignInModel.fromJson(response);
+      CacheHelper().saveData(key: ApiKey.token, value: response[ApiKey.token]);
       return Right(signInModel);
     } on ServerException catch (e) {
       return Left(e.errorModel.errorMessage);
@@ -80,6 +84,23 @@ class UserRepository {
           );
 
       return Right(UserModel.fromJson(response));
+    } on ServerException catch (e) {
+      return Left(e.errorModel.errorMessage);
+    }
+  }
+
+  Future<Either<String,LogOutModel>> logOut()async{
+    final dio = Dio();
+    try {
+      dio.options.baseUrl = EndPoints.baseUrl;
+      dio.options.headers = {
+        
+
+        'Content-Type': 'application/json',
+        'Authorization':
+            'Token ${CacheHelper().getData(key: ApiKey.token)}'};
+      final response = await api.post(EndPoints.logOutEndPoint);
+      return Right(LogOutModel.fromJson(response));
     } on ServerException catch (e) {
       return Left(e.errorModel.errorMessage);
     }

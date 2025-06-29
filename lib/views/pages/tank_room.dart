@@ -117,7 +117,7 @@ class _TankRoomState extends State<TankRoom> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     TankGuage(
-                                      tankLevel: state is TankAndFlowSuccess ? state.tankAndFlowModels[2].value : 0,
+                                      tankLevel: state is TankAndFlowSuccess ? state.tankAndFlowModels.firstWhere((item)=> item.metricType =='tank_level').value : 0.0,
                                       flowrateState: TankroomCubit.get(context).flowrate,
                                     ),
                                     SizedBox(

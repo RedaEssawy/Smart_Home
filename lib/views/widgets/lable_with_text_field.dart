@@ -8,6 +8,7 @@ class LableWithTextField extends StatefulWidget {
   final IconData prefixIcon;
   final String hintText;
   final String title;
+  final void Function(String)? onChanged;
   final String? Function(String?)? validator;
 
   const LableWithTextField(
@@ -18,7 +19,7 @@ class LableWithTextField extends StatefulWidget {
       this.sufixIcon,
       this.validator,
       required this.hintText,
-      this.obscureText = false});
+      this.obscureText = false, this.onChanged});
 
   @override
   State<LableWithTextField> createState() => _LableWithTextFieldState();
@@ -38,6 +39,7 @@ class _LableWithTextFieldState extends State<LableWithTextField> {
               .copyWith(fontWeight: FontWeight.w600),
         ),
         TextFormField(
+          onChanged: widget.onChanged,
           validator:widget.validator,
           controller: widget.controller,
           obscureText: widget.obscureText,

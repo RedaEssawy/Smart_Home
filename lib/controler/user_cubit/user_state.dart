@@ -81,3 +81,15 @@ final class TankValueFailure extends UserState {
   final String errorMessage;
   TankValueFailure({required this.errorMessage});
 }
+
+final class LogoutSuccess extends UserState {
+  final LogOutModel logOutModel;
+  LogoutSuccess({required this.logOutModel});
+}
+
+final class LogoutFailure extends UserState {
+  final String errorMessage;
+  LogoutFailure({required this.errorMessage});
+}
+
+final class LogoutLoading extends UserState {}
