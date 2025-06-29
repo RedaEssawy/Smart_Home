@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mqtt_client/mqtt_client.dart';
-import 'package:smart_home/controler/motor_cubit/motor_cubit.dart';
 import 'package:smart_home/core/util/app_colors.dart';
-import 'package:smart_home/core/util/assets.dart';
 import 'package:smart_home/core/util/topics.dart';
-import 'package:smart_home/views/pages/profile_page.dart';
-import 'package:smart_home/views/widgets/devices_card.dart';
 import 'package:smart_home/controler/controlroom_cubit/controlroom_state.dart';
-import 'package:smart_home/views/widgets/lable_with_text_field.dart';
 
 import '../../controler/controlroom_cubit/controlroom_cubit.dart';
 
@@ -87,8 +82,8 @@ class _ControlRoomState extends State<ControlRoom> {
         height: size.height * .9,
         child: BlocBuilder<ControlroomCubit, ControlroomState>(
           builder: (BuildContext context, state) {
-            final isLandscap =
-                MediaQuery.of(context).orientation == Orientation.landscape;
+            // final isLandscap =
+                // MediaQuery.of(context).orientation == Orientation.landscape;
             return LayoutBuilder(
                 builder: (context, constraints) => SingleChildScrollView(
                       child: Column(
