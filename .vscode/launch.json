@@ -5,6 +5,12 @@
             "type": "dart",
             "request": "launch",
             "program": "lib/models/user_model.dart"
+        },
+        {
+            "name": "Flutter (lib/views/pages/lekage_room.dart)",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/views/pages/lekage_room.dart"
         }
     ]
 }
