@@ -162,10 +162,10 @@ void _handleSignIn() async {
                                 }
                                 return null;
                               },
-                              title: 'Email',
+                              title: 'Name',
                               controller: emailController,
-                              prefixIcon: Icons.email,
-                              hintText: 'Enter your email',
+                              prefixIcon: Icons.person,
+                              hintText: 'Enter your name or phone number',
                             ),
                             SizedBox(height: constraint.maxHeight * 0.02),
                             LableWithTextField(

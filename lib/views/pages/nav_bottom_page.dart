@@ -7,6 +7,7 @@ import 'package:smart_home/views/pages/flowrate_room.dart';
 import 'package:smart_home/views/pages/home.dart';
 import 'package:smart_home/views/pages/lekage_room.dart';
 import 'package:smart_home/views/pages/profile_page.dart';
+import 'package:smart_home/views/pages/set_consumption.dart';
 import 'package:smart_home/views/pages/tank_room.dart';
 
 class NavBottomPage extends StatefulWidget {
@@ -40,6 +41,8 @@ class _NavBottomPageState extends State<NavBottomPage> {
     TankRoom(),
     FlowrateRoom(),
     LekageRoom(),
+    SetConsumption(),
+
     ProfilePage(api: DioConsumer(dio: Dio()),),
 
 
@@ -102,10 +105,13 @@ class _NavBottomPageState extends State<NavBottomPage> {
                 icon: Icon(Icons.alarm_add),
                 label: 'Leakage',
               ),
+               BottomNavigationBarItem(
+                icon: Icon(Icons.water_sharp), label: 'Threshold'),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person,),
                 label: 'Profile',
               ),
+             
               
             ],
             showUnselectedLabels: true,
